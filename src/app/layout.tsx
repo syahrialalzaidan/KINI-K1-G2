@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import './globals.css'
-import { Toaster } from 'react-hot-toast'
-
 import Provider from "@/app/context/client-provider"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
@@ -30,7 +28,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={notoSans.className}>
         <Provider session={session}>
-          <Toaster />
+          <ToasterContext />
           {children}
         </Provider>
       </body>

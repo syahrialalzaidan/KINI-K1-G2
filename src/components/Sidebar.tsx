@@ -79,7 +79,7 @@ export default function Sidebar(props: SidebarProps) {
                   pathName === `/${props.role}/catalogue` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
                   pathName === `/${props.role}/catalogue` || pathName == "/cashier" || props.role =="warehouse" ? primaryColor() : ""
-                }  group hover:bg-ungu-mid ${
+                }  group ${
                   props.role == "warehouse" ? "hidden" : ""
                 }} ${hoverColor()}`}
               >
@@ -93,7 +93,7 @@ export default function Sidebar(props: SidebarProps) {
                   pathName === `/${props.role}/keranjang` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
                   pathName === `/${props.role}/keranjang` ? primaryColor() : ""
-                }  group hover:bg-ungu-mid ${
+                }  group ${
                   props.role === "cashier" ? "mt-4" : "hidden"
                 } ${hoverColor()}`}
               >
