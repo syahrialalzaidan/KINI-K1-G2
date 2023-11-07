@@ -15,6 +15,7 @@ const config: Config = {
         secondary1 : "#176B87",
         secodndary2 : "#64CCC5",
         secondary3 : "#DAFFFB",
+        'secondary-warehouse' : "#DB2777"
 
       },
       backgroundImage: {
