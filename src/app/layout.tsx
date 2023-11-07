@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import './globals.css'
+import { Toaster } from 'react-hot-toast'
+
+import Provider from "@/app/context/client-provider"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const notoSans = Noto_Sans({
   weight: ['400', '500', '600', '700', '800'],
@@ -13,14 +18,20 @@ export const metadata: Metadata = {
   description: 'Ur best POS exist',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
   return (
     <html lang="en">
-      <body className={notoSans.className}>{children}</body>
+      <body className={notoSans.className}>
+        <Provider session={session}>
+          <Toaster />
+          {children}
+        </Provider>
+      </body>
     </html>
   )
 }
