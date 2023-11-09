@@ -30,7 +30,7 @@ export default function LoginForm() {
                     if (session?.user.role === "ADMIN") {
                         router.push("/admin")
                     } else if (session?.user.role === "CASHIER") {
-                        router.push("/casher")
+                        router.push("/cashier")
                     } else if (session?.user.role === "WAREHOUSE") {
                         router.push("/warehouse")
                     }
