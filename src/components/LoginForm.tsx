@@ -3,10 +3,11 @@ import Link from "next/link";
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
-import { signIn, signOut } from "next-auth/react" 
+import { signIn, signOut, useSession } from "next-auth/react" 
 import { toast } from 'react-hot-toast'
 
 export default function LoginForm() {
+    const { data: session, status } = useSession()
     const router = useRouter()
     const [loginData, setLoginData] = useState({
         username: "",
@@ -26,7 +27,13 @@ export default function LoginForm() {
                 }
                 if (res?.ok && !res?.error) {
                     toast.success("Logged in successfully")
-                    router.push("/")
+                    if (session?.user.role === "ADMIN") {
+                        router.push("/admin")
+                    } else if (session?.user.role === "CASHIER") {
+                        router.push("/casher")
+                    } else if (session?.user.role === "WAREHOUSE") {
+                        router.push("/warehouse")
+                    }
                 }
             })
     }
