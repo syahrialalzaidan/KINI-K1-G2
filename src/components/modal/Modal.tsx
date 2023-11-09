@@ -68,19 +68,11 @@ const Modal: React.FC<ModalProps> = ({
             ${showModal ? "opacity-100" : "opacity-0"}
           `}
           >
-            <div className="translate h-auto border-0 rounded-lg shadow-lg relative flex flex-col p-24 gap-10 w-full bg-white outline-none focus:outline-none">
+            <div className="translate h-auto border-0 rounded-lg shadow-lg relative flex flex-col gap-10 w-full bg-white outline-none focus:outline-none">
               {/* BODY */}
               {body && <div className="relative flex-auto">{body}</div>}
               {/* FOOTER */}
-              <div className="flex justify-center">
-                <button
-                  className={`${!role? "bg-secondary1" :  role == "warehouse"? "bg-secondary-warehouse" : "bg-ungu" } rounded-lg text-white px-6 py-4 flex flex-row items-center justify-center`}
-                  onClick={onClose}
-                >
-                  {actionLabel}
-                </button>
-                {footer}
-              </div>
+              
             </div>
           </div>
         </div>
