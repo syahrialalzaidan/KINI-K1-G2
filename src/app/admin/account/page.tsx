@@ -60,7 +60,7 @@ export default function ManageAccount() {
                         Tambah User
                     </button>
                 </div>
-                <table className="table-auto my-7">
+                <table className="table-auto my-7 rounded-md overflow-hidden">
                     <thead className="bg-ungu-mid text-ungu text-left font-extralight">
                         <tr>
                             <th className="px-4 py-3" ></th>
