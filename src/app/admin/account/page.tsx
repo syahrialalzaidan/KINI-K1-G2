@@ -1,36 +1,27 @@
-"use client";
-
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 
-import useEditProfilModal from "@/hooks/useEditProfilModal";
-import EditProfilModal from "@/components/modal/EditProfilModal";
-
-import useAddUserModal from "@/hooks/useAddUserModal";
 import AddUserModal from "@/components/modal/AddUserModal";
 
-export default function ManageAccount() {
-    const editModal = useEditProfilModal()
-    const addModal = useAddUserModal()
-    const users = [
-        {
-            id: 0,
-            username : "rerebredel",
-            name : "Adrenalin Apprizal",
-            role : "ADMIN",
-            createdAt : "24/10/2023"
-        },
-        {
-            id: 1,
-            username : "vinnsst",
-            name : "Kevin Sebastian",
-            role : "CASHIER",
-            createdAt : "24/10/2023"
-        }
-    ]
+import AccountList from "./component/accountList";
+import AddAccount from "./component/addAccount";
+
+import axios from "axios";
+
+async function getUsers() {
+    try {
+        const res = await axios.get('http://localhost:3000/api/account')
+        return res.data
+    } catch (error: any) {
+        console.log(error)
+    }
+}
+
+export default async function ManageAccount() {
+    const users = await getUsers();
+    
     return (
         <>
-        <EditProfilModal />
         <AddUserModal />
         <div className="bg-[#FBF4FB] min-h-screen flex flex-col items-start">
             <div className="mx-40">
@@ -53,49 +44,9 @@ export default function ManageAccount() {
                             height={24}
                         />
                     </div>
-                    <button 
-                        className="bg-ungu text-xs text-white px-5 rounded-md"
-                        onClick={() => addModal.onOpen()}
-                    >
-                        Tambah User
-                    </button>
+                    <AddAccount />
                 </div>
-                <table className="table-auto my-7 rounded-md overflow-hidden">
-                    <thead className="bg-ungu-mid text-ungu text-left font-extralight">
-                        <tr>
-                            <th className="px-4 py-3" ></th>
-                            <th className="px-4 py-3">Username</th>
-                            <th className="px-4 py-3">Name</th>
-                            <th className="px-4 py-3">Role</th>
-                            <th className="px-4 py-3">Created at</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white">
-                        {users?.map((user) => {
-                            return (
-                                <tr key={user.id} className="h-10">
-                                    <td className=" ">
-                                        <Image 
-                                            src="/edit.svg"
-                                            alt="Edit Profile"
-                                            className="mx-auto"
-                                            width={20}
-                                            height={20}
-                                            onClick={() => editModal.onOpen({
-                                                section: user.name,
-                                                description: user.role
-                                            })}
-                                        />
-                                    </td>
-                                    <td className="px-4 py-3">{user.username}</td>
-                                    <td className="px-4 py-3">{user.name}</td>
-                                    <td className="px-4 py-3">{user.role}</td>
-                                    <td className="px-4 py-3">{user.createdAt}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <AccountList users={users}/>
             </div>
         </div>
         </>

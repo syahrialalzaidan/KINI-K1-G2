@@ -1,18 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { BsCloudUpload } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import Modal from "./Modal";
 import { AiOutlineClose } from "react-icons/ai";
 import useAddUserModal from "@/hooks/useAddUserModal";
+import { NextResponse } from "next/server";
+import { toast } from "react-hot-toast";
 
 const AddUserModal = () => {
+  const router = useRouter();
   const addusermodal = useAddUserModal();
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("ADMIN");
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  // TODO: Handle Username sama
+  const handleSubmit = async () => {
+    try {
+      if (!username || !name || !password || !role) {
+        toast.error("Isi data dengan lengkap!");
+        throw new Error("Data tidak lengkap!")
+      }
+      await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          name,
+          password,
+          role
+        })
+      })
+      router.refresh()
+      toast.success("Akun berhasil dibuat!")
+      addusermodal.onClose();
+    } catch (error: any) {
+      return NextResponse.json(error)
+    }
+  }
 
   const bodyElement = (
     <div className="p-8">
@@ -33,7 +63,7 @@ const AddUserModal = () => {
           <input
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
-            placeholder="rerebredel"
+            placeholder="Enter new username"
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -46,7 +76,7 @@ const AddUserModal = () => {
           <input
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
-            placeholder="Adrenalin Apprizal"
+            placeholder="Enter new name"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -59,7 +89,7 @@ const AddUserModal = () => {
           <input
             type="password"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
-            placeholder="Enter the Password"
+            placeholder="Enter  new password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -73,10 +103,11 @@ const AddUserModal = () => {
             className="border-2 border-black rounded-lg p-2"
             placeholder="Admin"
             onChange={(e) => setRole(e.target.value)}
+            defaultValue={"ADMIN"}
           >
-            <option className="">Admin</option>
-            <option className="">Cashier</option>
-            <option className="">Warehouse</option>
+            <option value="ADMIN">Admin</option>
+            <option value="CASHIER">Cashier</option>
+            <option value="WAREHOUSE">Warehouse</option>
           </select>
         </div>
       </div>
@@ -84,7 +115,7 @@ const AddUserModal = () => {
       <div className="flex justify-end mt-8">
         <button
           className="bg-ungu text-white py-3 px-4 rounded-md hover:scale-110"
-          onClick={() => {}}
+          onClick={() => handleSubmit()}
         >
           Konfirmasi
         </button>

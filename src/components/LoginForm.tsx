@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { signIn, signOut, useSession } from "next-auth/react" 
@@ -13,6 +13,22 @@ export default function LoginForm() {
         username: "",
         password:"",
     })
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            if (session.user.role === 'ADMIN') {
+                router.push('/admin')
+            }
+            if (session.user.role === 'CASHIER') {
+                router.push('/cashier')
+            }
+            if (session.user.role === 'WAREHOUSE') {
+                router.push('/warehouse')
+            }
+        }
+    }, [status])
+
+    
 
     const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -27,17 +43,10 @@ export default function LoginForm() {
                 }
                 if (res?.ok && !res?.error) {
                     toast.success("Logged in successfully")
-                    if (session?.user.role === "ADMIN") {
-                        router.push("/admin")
-                    } else if (session?.user.role === "CASHIER") {
-                        router.push("/cashier")
-                    } else if (session?.user.role === "WAREHOUSE") {
-                        router.push("/warehouse")
-                    }
                 }
             })
     }
-
+    
     return (
         <form className="w-full h-full items-center" onSubmit={onSubmit}>
             <div className="border border-black text-center rounded-3xl">

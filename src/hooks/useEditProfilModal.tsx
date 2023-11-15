@@ -1,8 +1,12 @@
 import { create } from "zustand";
 
 interface EditProfilModalData {
-  section: string;
-  description: string;
+  id: string;
+  username: string;
+  name: string;
+  password: string;
+  role: string;
+  createdAt: string;
 }
 
 interface EditProfilModalStore {
@@ -15,8 +19,12 @@ interface EditProfilModalStore {
 const useEditProfilModal = create<EditProfilModalStore>((set) => ({
   isOpen: false,
   data: {
-    section: "",
-    description: "",
+    id: "",
+    username: "",
+    name: "",
+    password: "",
+    role: "",
+    createdAt:""
   },
   onOpen: (data) => set({ isOpen: true, data }),
   onClose: () => set({ isOpen: false }),
