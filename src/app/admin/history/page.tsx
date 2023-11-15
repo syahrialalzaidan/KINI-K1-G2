@@ -1,9 +1,10 @@
-import Sidebar from "@/components/Sidebar";
+import History from "./History";
 
 export default function AdminHistory() {
-    return (
-        <>
-            <p>Testing</p>
-        </>
-    )
+
+  return (
+    <div>
+        <History />        
+    </div>
+  )
 }
