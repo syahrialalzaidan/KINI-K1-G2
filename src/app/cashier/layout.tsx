@@ -9,7 +9,7 @@ export default function CashierLayout({
   return (
     <>
         <Sidebar role="cashier" />
-        <div className="pl-80 py-4">
+        <div className="lg:pl-80 px-[5%] py-24 lg:py-4">
             {children}
         </div>
     </>

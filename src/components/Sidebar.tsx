@@ -9,6 +9,8 @@ import { MdLogout } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { SlBasket } from "react-icons/sl";
+import { useState } from "react";
+import MenuIcon from "./MenuIcon";
 
 interface SidebarProps {
   role: string;
@@ -20,6 +22,8 @@ export default function Sidebar(props: SidebarProps) {
   //   const handleSignOut = async () => {
   //     await signOut();
   //   };
+
+  const [open, setOpen] = useState(false);
 
   function primaryColor() {
     if (props.role === "admin") {
@@ -40,12 +44,19 @@ export default function Sidebar(props: SidebarProps) {
       return "hover:bg-[#6DADA9]/25";
     }
   }
+  
 
   return (
     <div>
+      <div className="px-[5%] py-8 fixed top-0 left-0 z-50">
+        <MenuIcon isOpen={open} handleToggle={() => setOpen((prev) => !prev)} />
+      </div>
+
       <aside
         id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed mt-10 lg:mt-0 top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }  sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <div className="h-full py-8 overflow-y-auto bg-white">
@@ -56,7 +67,7 @@ export default function Sidebar(props: SidebarProps) {
             <li className={`${props.role == "admin" ? "" : "hidden"}`}>
               <label className="px-8 text-black/[0.38] text-xs">Akun</label>
               <a
-                href="/"
+                href={`/${props.role}`}
                 className={`px-8 ${
                   pathName === `/${props.role}` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
@@ -74,11 +85,15 @@ export default function Sidebar(props: SidebarProps) {
                 {props.role == "cashier" ? "Belanja" : "Gudang"}
               </label>
               <a
-                href="/"
+                href={`/${props.role}/catalogue`}
                 className={`px-8 ${
                   pathName === `/${props.role}/catalogue` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
-                  pathName === `/${props.role}/catalogue` || pathName == "/cashier" || props.role =="warehouse" ? primaryColor() : ""
+                  pathName === `/${props.role}/catalogue` ||
+                  pathName == "/cashier" ||
+                  props.role == "warehouse"
+                    ? primaryColor()
+                    : ""
                 }  group ${
                   props.role == "warehouse" ? "hidden" : ""
                 }} ${hoverColor()}`}
@@ -101,11 +116,12 @@ export default function Sidebar(props: SidebarProps) {
                 <span className="whitespace-nowrap font-bold">Keranjang</span>
               </a>
             </li>
-            <li className={`${props.role=="warehouse"? "hidden" : ""}`}>
+            <li className={`${props.role == "warehouse" ? "hidden" : ""}`}>
               <label className="px-8 text-black/[0.38] text-xs">
                 Transaksi
               </label>
               <a
+                href={`/${props.role}/history`}
                 className={`px-8 ${
                   pathName === `/${props.role}/history` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
@@ -119,10 +135,11 @@ export default function Sidebar(props: SidebarProps) {
               </a>
 
               <a
+                href={`/${props.role}/reports`}
                 className={`px-8 ${
-                  pathName === `/${props.role}/report` ? "border-l-4" : ""
+                  pathName === `/${props.role}/reports` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
-                  pathName === `/${props.role}/report` ? primaryColor() : ""
+                  pathName === `/${props.role}/reports` ? primaryColor() : ""
                 }  group ${
                   props.role === "admin" ? "" : "hidden"
                 } ${hoverColor()} cursor-pointer mt-4`}
@@ -139,7 +156,7 @@ export default function Sidebar(props: SidebarProps) {
             href="/"
             className={`px-8 flex items-center gap-3 mt-16 p-4 text-[#4C4E64]/[0.87] rounded-lg group hover:bg-red-500 hover:text-white`}
           >
-            <MdLogout className="text-2xl"/>
+            <MdLogout className="text-2xl" />
             <span className="whitespace-nowrap font-bold">Logout</span>
           </a>
         </div>
