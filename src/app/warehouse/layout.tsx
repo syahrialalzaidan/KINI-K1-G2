@@ -1,17 +1,14 @@
-import Sidebar from '@/components/Sidebar'
-
+import Sidebar from "@/components/Sidebar";
 
 export default function WarehouseLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
-        <Sidebar role="warehouse" />
-        <div className="pl-80 py-4">
-            {children}
-        </div>
+      <Sidebar role="warehouse" />
+      <div className="lg:pl-80 px-[5%] py-24 lg:py-4">{children}</div>
     </>
-  )
+  );
 }

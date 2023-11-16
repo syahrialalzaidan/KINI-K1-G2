@@ -1,37 +1,24 @@
-"use client";
-import PaymentModal from "@/components/modal/PaymentModal";
-import ProductModal from "@/components/modal/ProductModal";
-import useAddedProductModal from "@/hooks/useAddedProductModal";
-import usePaymentModal from "@/hooks/usePaymentModal";
 import Image from "next/image";
-import toast from "react-hot-toast";
+import LoginForm from "@/components/LoginForm"; 
 
-export default function Home() {
-  const productmodal = useAddedProductModal();
-  const paymentmodal = usePaymentModal();
-  return (
-    <>
-      <PaymentModal />
-      <ProductModal role="warehouse" text="Product Berhasil Ditambahkan" /> 
-
-      <div className="font-bold text-5xl text-center bg-ungu-mid h-screen flex flex-col gap-4 items-center justify-center">
-        <p className="cursor-pointer" onClick={() => {toast.success("Halo")}}>KINI</p>
-        <div className="flex gap-8">
-          <button
-            className="p-6 rounded-xl bg-blue-200"
-            onClick={() => productmodal.onOpen()}
-          >
-            Popup Product
-          </button>
-
-          <button
-            className="p-6 rounded-xl bg-red-200"
-            onClick={() => paymentmodal.onOpen()}
-          >
-            Popup Payment
-          </button>
+export default function LoginPage() {
+    return (
+        <div className="flex">
+            <div className="py-8 flex items-center bg-[#192310] h-screen w-2/5 overflow-hidden">
+                <Image 
+                    src="logo.svg"
+                    width={484}
+                    height={767}
+                    alt="logo"
+                    className="w-[80%]"
+                />
+            </div>
+            <div className="flex-1 flex justify-center items-center py-8 bg-white h-screen relative">
+                <div className="w-[557px]">
+                    <LoginForm />
+                </div>
+                
+            </div>
         </div>
-      </div>
-    </>
-  );
+    )
 }
