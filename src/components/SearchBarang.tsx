@@ -21,7 +21,7 @@ export default function SearchBarang({ barang, setBarang }: SearchBarangProps) {
         ))
 
     return (
-        <div className="max-w-full">
+        <div className="max-w-md overflow-hidden md:max-w-screen-lg">
             <Combobox value={barang} onChange={setBarang}>
                 <div className="">
                     {/* inpput column */}

@@ -43,7 +43,7 @@ export default function Searchbar() {
 
     return (
         <form onSubmit={handleSearch}>
-            <div className="flex">
+            <div className="flex max-w-md mx-auto overflow-hidden sm:max-w-screen-lg">
                 <SearchBarang 
                     barang = {barang}
                     setBarang = {setBarang}

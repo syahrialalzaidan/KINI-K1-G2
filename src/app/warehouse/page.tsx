@@ -4,8 +4,8 @@ import Searchbar from "@/components/Searchbar";
 
 export default function WarehousePage() {
     return (
-        <div className=" max-w-md mx-auto overflow-hidden sm:max-w-screen-lg sm:ml-96 pt-4">
-            <div>
+        <div className="max-w-md mx-auto overflow-hidden sm:max-w-screen-lg sm:ml-96 pt-4">
+            <div className="sm:pr-5">
                 <Account 
                     nama="Iyal"
                     role="warehouse"
@@ -16,13 +16,13 @@ export default function WarehousePage() {
                 <h1 className="text-4xl font-bold">Catalog</h1>
             </div>
             
-            <div className="sm:flex mt-16">
+            <div className="xl:flex mt-16">
                 <Searchbar />
-                <div className="flex flex-row gap-10 pt-12 sm:pt-0">
-                    <div className="sm:ml-12 sm:pt-3">
+                <div className="flex flex-row gap-10 pt-12 xl:pt-0">
+                    <div className="xl:ml-12 xl:pt-3">
                         <CustomFilter title="Filter" />
                     </div>
-                    <div className="sm:pt-3">
+                    <div className="xl:pt-3">
                         <CustomFilter title="Sort" />
                     </div>
                 </div>
