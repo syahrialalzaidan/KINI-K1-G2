@@ -47,14 +47,14 @@ model TransactionItem {
 
 model Produk {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
-  jenisBrg      JenisBarang  
-  namaBrg       String
-  hargaBrg      String
-  noInvoice     String        @unique
+  jenisBrg      JenisBarang   
+  namaBrg       String        @unique
+  hargaBrg      Int
+  stok          Int        
   tglTerima     DateTime      @default(now())
   tglUpdate     DateTime      @updatedAt
   penerima      String
-  image         String
+  image         String        
 }
 
 enum JenisBarang {
