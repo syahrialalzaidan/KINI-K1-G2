@@ -31,22 +31,8 @@ export default async function ManageAccount() {
                     </p>
                 </div>
                 <div className="flex flex-row my-7">
-                    <div className="flex flex-row shadow-sm mr-5 py-2 px-2 rounded-md bg-white">
-                        <input
-                            className="focus:border-none focus:ring-0 focus:outline-none placeholder:text-ungu"
-                            placeholder="Cari user...."
-                        >
-                        </input>
-                        <Image
-                            src="/search.svg"
-                            alt=""
-                            width={24}
-                            height={24}
-                        />
-                    </div>
-                    <AddAccount />
+                    <AccountList users={users}/>
                 </div>
-                <AccountList users={users}/>
             </div>
         </div>
         </>
