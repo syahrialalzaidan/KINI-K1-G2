@@ -24,7 +24,7 @@ interface ProductListProps {
     products: Product[]
 }
 
-export default function ProdukCashier({{products} : ProductListProps, addToCart}) {
+export default function ProdukCashier({products : ProductListProps, addToCart}) {
 
     const [cart, setCart] = useState([])
     const [showCart, setShowCart] = useState(false)
