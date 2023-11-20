@@ -48,8 +48,7 @@ export default async function CashierPage() {
 
     return (
         <>
-            <ProdukCashier products={produk_get} addToCart={addToCart} />
-            <Keranjang cart={cart}></Keranjang>
+            <ProdukCashier products={produk_get} />
         </>
 
     )

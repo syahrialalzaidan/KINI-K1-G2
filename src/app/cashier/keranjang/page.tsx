@@ -1,3 +1,5 @@
+// src\app\cashier\keranjang\page.tsx
+
 'use client';
 import Keranjang from "@/components/Keranjang"
 import { useState } from 'react';
