@@ -28,9 +28,9 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
     const [cart, setCart] = useState<CartProduct[]>(CartList)
 
     console.log("DALME COMPPOENNT", CartList)
-    // useEffect(() => {
-    //     setCart(cart)
-    // }, [cart])
+    useEffect(() => {
+        setCart(cart)
+    }, [cart])
 
     const [totalPrice, setTotalPrice] = useState(0);
 
