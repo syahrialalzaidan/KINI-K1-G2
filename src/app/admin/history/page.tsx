@@ -1,10 +1,17 @@
+import { prisma } from "@/lib/prisma";
 import History from "./History";
 
-export default function AdminHistory() {
+export default async function AdminHistory() {
+
+  const transaction = await prisma.transaction.findMany({
+    include: {
+      items : true
+    }
+  });
 
   return (
     <div>
-        <History />        
+      <History transaction = {transaction} />
     </div>
-  )
+  );
 }

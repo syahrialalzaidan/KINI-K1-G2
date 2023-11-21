@@ -1,7 +1,7 @@
 import { IoMdNotificationsOutline } from "react-icons/io";
 
 interface AccountProps {
-  nama: string;
+  nama: string | undefined;
   role: string;
 }
 
