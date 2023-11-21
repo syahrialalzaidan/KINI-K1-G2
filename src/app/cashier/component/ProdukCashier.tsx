@@ -63,8 +63,9 @@ export default function ProdukCashier({ products }: ProductListProps) {
                                                     quantity: 1,
                                                 }
                                             ])
-                                        }>
-                                        <div className="text-slate-400 text-[9px] font-medium leading-[15px]">Tambah ke Keranjang</div>
+                                        }
+                                    >
+                                        <p className="text-slate-400 text-[9px] font-medium leading-[15px]">Tambah ke Keranjang</p>
                                     </button>
                                     <div className={`${show ? "block" : "hidden"}`}>
                                         <Keranjang CartList={cart} setShow={setShow}  />

@@ -28,10 +28,9 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
     const [cart, setCart] = useState<CartProduct[]>(CartList)
 
     console.log("DALME COMPPOENNT", CartList)
-
-    useEffect(() => {
-        setCart(cart)
-    }, [cart])
+    // useEffect(() => {
+    //     setCart(cart)
+    // }, [cart])
 
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -39,6 +38,8 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
         const newTotalPrice = cart.map(item => item.hargaBrg * item.quantity).reduce((total, value) => total + value, 0);
         setTotalPrice(newTotalPrice);
     }, [cart]);
+
+    console.log('CARTLIST', CartList)
 
     return (
         <div className="w-[517px] bg-white h-screen fixed right-0 top-0 pl-[22px] py-[65px] pr-[43px] overflow-y-auto">
@@ -58,7 +59,7 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
             {/* barang-barang */}
             <div className='barangList'>
                 {
-                    CartList?.map((cartItem, cartIndex) => {
+                    cart?.map((cartItem, cartIndex) => {
                         return (
                             <div className='w-[452px] h-[148px] relative border-b-[2px] border-zinc-200'>
                                 <img src={cartItem.image} className='w-[106px] h-[106px] left-[29px] top-[21px] absolute' />
@@ -66,10 +67,13 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
                                 <div className="w-6 h-6 left-[168px] top-[103px] absolute">
                                     <button id='decreaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
                                         onClick={() => {
-                                            const _CART = cart.map((item, index) => {
-                                                return cartIndex === index ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 } : item
-                                            }).filter(item => item.quantity >= 0);
-                                            setCart(_CART)
+                                            setCart((prevCart) => 
+                                                prevCart.map((item, index) =>
+                                                    cartIndex === index
+                                                        ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+                                                        : item
+                                                )
+                                            );
                                         }}
                                     >
                                         -
@@ -79,10 +83,13 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
                                 <div className="w-6 h-6 left-[235px] top-[103px] absolute">
                                     <button id='increaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
                                         onClick={() => {
-                                            const _CART = cart.map((item, index) => {
-                                                return cartIndex === index ? { ...item, quantity: item.quantity + 1 } : item
-                                            })
-                                            setCart(_CART)
+                                            setCart((prevCart) => 
+                                                prevCart.map((item, index) =>
+                                                    cartIndex === index
+                                                        ? { ...item, quantity: item.quantity + 1 }
+                                                        : item
+                                                )
+                                            );
                                         }}
                                     >
                                         +

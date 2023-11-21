@@ -36,7 +36,7 @@ function ProductList( {products}: ProductListProps, addToCart) {
                                 <p className='text-black text-xs font-normal leading-[18px] mt-[6px] text-center'>Rp{new Intl.NumberFormat('id-ID', {minimumFractionDigits: 2}).format(productItem.hargaBrg)}</p>
                                 <button className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 justify-center items-center gap-1 inline-flex mt-[11px]"
                                     onClick={() => addToCart(productItem)}>
-                                    <div className="text-slate-400 text-[9px] font-medium leading-[15px]">Tambah ke Keranjang</div>
+                                    <p className="text-slate-400 text-[9px] font-medium leading-[15px]">Tambah ke Keranjang</p>
                                 </button>
                             </div>
                         )
