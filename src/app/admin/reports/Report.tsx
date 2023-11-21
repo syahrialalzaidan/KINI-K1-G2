@@ -5,9 +5,12 @@ import { FaFilter, FaSort } from "react-icons/fa";
 import Grafik from "./Grafik";
 import { useState } from "react";
 import Persen from "./Persen";
+import { useRouter } from "next/navigation";
 
 export default function Report() {
+  const router = useRouter();
   const { data: session, status } = useSession();
+  if(!session) router.push("/login");
   const [type, setType] = useState("year");
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   const data = [
