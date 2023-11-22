@@ -24,7 +24,7 @@ const AddUserModal = () => {
         toast.error("Isi data dengan lengkap!");
         throw new Error("Data tidak lengkap!")
       }
-      await fetch('http://localhost:3000/api/auth/register', {
+      const res = await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,10 +36,19 @@ const AddUserModal = () => {
           role
         })
       })
-      router.refresh()
-      toast.success("Akun berhasil dibuat!")
-      addusermodal.onClose();
+
+      if (res.ok) {
+        router.refresh()
+        toast.success("Akun berhasil dibuat!")
+        addusermodal.onClose();
+      }
+
+      if (res.status === 406) {
+        throw new Error("Username sudah ada!")
+      }
+      
     } catch (error: any) {
+      toast.error(error.message)
       return NextResponse.json(error)
     }
   }

@@ -46,16 +46,16 @@ const EditProfilModal = () => {
           role
         })
       })
-
+      
       if (res.ok) {
         router.refresh()
         toast.success('Akun berhasil diperbarui!')
         editprofilmodal.onClose();
       }
-      
 
-      throw new Error()
-
+      if (res.status === 406) {
+        throw new Error("Username sudah ada!")
+      }
       
     } catch (error: any) {
       toast.error(error.message)

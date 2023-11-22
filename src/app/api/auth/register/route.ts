@@ -16,7 +16,8 @@ export async function POST(request: Request) {
         })
 
         if (isUserExisted) {
-            return NextResponse.json({ error: 'Username sudah ada!' }, { status: 400 })
+            return NextResponse.json({ message: 'Username sudah ada!' }, { status: 406 })
+            return NextResponse.json({ message: 'Username sudah ada!' }, { status: 406 })
         }
         
         const hashedPassword = await bcrypt.hash(password, 5)

@@ -52,9 +52,7 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
             })
     
             if (usernameExisted) {
-                throw new Error('Username sudah ada')
-                // return NextResponse.json({message: 'Username sudah ada!'}, { status: 400 })
-                return NextResponse.error()
+                return NextResponse.json({ error: "Username sudah ada!"}, { status: 406 })
             }
         }
 
@@ -69,6 +67,6 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
         })
         return NextResponse.json(updatedUser, { status: 200 })
     } catch (error: any) {
-        return NextResponse.json(error)
+        return NextResponse.json(error, { status: 400})
     }
 }
