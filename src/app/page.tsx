@@ -13,7 +13,7 @@ export default function LoginPage() {
                 <div className="max-w-[360px] mt-4 justify-center text-center text-white text-2xl font-normal">
                     Aplikasi kewirusahaan yang intuitif, nyaman, dan inovatif.
                 </div>
-                <div className="mt-[96px] text-white text-4xl font-bold leading-[25px]">
+                <div className="mt-[96px] text-cyan-200 text-4xl font-bold leading-[25px]">
                     Satu aplikasi. Banyak fungsi.
                 </div>
                 <div className="mt-8 text-white text-2xl leading-[25px] h-[60px]">
