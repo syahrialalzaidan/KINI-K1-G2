@@ -34,9 +34,7 @@ interface CartListProps {
 
 
 export default function ProdukCashier({ products }: ProductListProps) {
-
     const [cart, setCart] = useState<CartProduct[]>([])
-
     const [show, setShow] = useState(false)
 
     useEffect(() => {
@@ -63,12 +61,13 @@ export default function ProdukCashier({ products }: ProductListProps) {
                                                     quantity: 1,
                                                 }
                                             ])
+                                            // Tambahin buat ngehandle kalo semisalnya ada barang yang sama yang ditambah
                                         }
                                     >
                                         <p className="text-slate-400 text-[9px] font-medium leading-[15px]">Tambah ke Keranjang</p>
                                     </button>
                                     <div className={`${show ? "block" : "hidden"}`}>
-                                        <Keranjang CartList={cart} setShow={setShow}  />
+                                        <Keranjang CartList={cart} setCart={setCart}  setShow={setShow}  />
                                     </div>
                                 </div>
                             </div>

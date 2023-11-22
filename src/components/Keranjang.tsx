@@ -20,26 +20,24 @@ interface CartProduct extends Product {
 
 interface CartListProps {
     CartList: CartProduct[]
-    setShow : React.Dispatch<React.SetStateAction<boolean>>;
+    setCart: React.Dispatch<React.SetStateAction<CartProduct[]>>
+    setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-export default function Keranjang({ CartList, setShow }: CartListProps) {
-    const [cart, setCart] = useState<CartProduct[]>(CartList)
+export default function Keranjang({ CartList, setCart, setShow }: CartListProps) {
 
-    console.log("DALME COMPPOENNT", CartList)
-    useEffect(() => {
-        setCart(cart)
-    }, [cart])
+    // useEffect(() => {
+    //     setCart(cart)
+    // }, [cart])
 
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
-        const newTotalPrice = cart.map(item => item.hargaBrg * item.quantity).reduce((total, value) => total + value, 0);
+        const newTotalPrice = CartList.map(item => item.hargaBrg * item.quantity).reduce((total, value) => total + value, 0);
         setTotalPrice(newTotalPrice);
-    }, [cart]);
+    }, [CartList]);
 
-    console.log('CARTLIST', CartList)
 
     return (
         <div className="w-[517px] bg-white h-screen fixed right-0 top-0 pl-[22px] py-[65px] pr-[43px] overflow-y-auto">
@@ -59,41 +57,43 @@ export default function Keranjang({ CartList, setShow }: CartListProps) {
             {/* barang-barang */}
             <div className='barangList'>
                 {
-                    cart?.map((cartItem, cartIndex) => {
+                    CartList?.map((cartItem, cartIndex) => {
                         return (
                             <div className='w-[452px] h-[148px] relative border-b-[2px] border-zinc-200'>
                                 <img src={cartItem.image} className='w-[106px] h-[106px] left-[29px] top-[21px] absolute' />
                                 <span className='left-[168px] top-[21px] absolute text-black text-2xl font-bold leading-[30px]'>{cartItem.namaBrg}</span>
-                                <div className="w-6 h-6 left-[168px] top-[103px] absolute">
-                                    <button id='decreaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
-                                        onClick={() => {
-                                            setCart((prevCart) => 
-                                                prevCart.map((item, index) =>
-                                                    cartIndex === index
-                                                        ? { ...item, quantity: Math.max(0, item.quantity - 1) }
-                                                        : item
-                                                )
-                                            );
-                                        }}
-                                    >
-                                        -
-                                    </button>
-                                </div>
-                                <span className='w-[11px] h-6 left-[208px] top-[103px] absolute text-black text-lg font-normal leading-[27px]'>{cartItem.quantity}</span>
-                                <div className="w-6 h-6 left-[235px] top-[103px] absolute">
-                                    <button id='increaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
-                                        onClick={() => {
-                                            setCart((prevCart) => 
-                                                prevCart.map((item, index) =>
-                                                    cartIndex === index
-                                                        ? { ...item, quantity: item.quantity + 1 }
-                                                        : item
-                                                )
-                                            );
-                                        }}
-                                    >
-                                        +
-                                    </button>
+                                <div className='flex items-center gap-4'> 
+                                    <div className="w-6 h-6 left-[168px] top-[103px] absolute">
+                                        <button id='decreaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
+                                            onClick={() => {
+                                                setCart((prevCart) =>
+                                                    prevCart.map((item, index) =>
+                                                        cartIndex === index
+                                                            ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+                                                            : item
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                    </div>
+                                    <span className='w-[11px] h-6 left-[208px] top-[103px] absolute text-black text-lg font-normal leading-[27px]'>{cartItem.quantity}</span>
+                                    <div className="w-6 h-6 left-[235px] top-[103px] absolute">
+                                        <button id='increaseQuantity' className='w-6 h-6 relative bg-white rounded-full border border-slate-500'
+                                            onClick={() => {
+                                                setCart((prevCart) =>
+                                                    prevCart.map((item, index) =>
+                                                        cartIndex === index
+                                                            ? { ...item, quantity: item.quantity + 1 }
+                                                            : item
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                 </div>
                                 <span className='left-[168px] top-[55px] absolute text-black text-lg font-normal leading-[27px]'>Rp{cartItem.hargaBrg * cartItem.quantity}</span>
                             </div>
