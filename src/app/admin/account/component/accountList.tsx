@@ -26,7 +26,8 @@ export default function AccountList({ users }: AccountListProps) {
 
     const findUsers = () => {
         const filteredUsers = users.filter(user =>
-            user.username.toLowerCase().includes(search.toLowerCase())
+            user.username.toLowerCase().includes(search.toLowerCase()) ||
+            user.name.toLowerCase().includes(search.toLowerCase())
         );
         setSearchedUsers(filteredUsers);
 
