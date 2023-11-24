@@ -33,42 +33,7 @@ export default async function ManageAccount() {
                 <div className="flex flex-row my-7">
                     <AccountList users={users}/>
                 </div>
-                <table className="table-auto my-7 rounded-md overflow-hidden">
-                    <thead className="bg-ungu-mid text-ungu text-left font-extralight">
-                        <tr>
-                            <th className="px-4 py-3" ></th>
-                            <th className="px-4 py-3">Username</th>
-                            <th className="px-4 py-3">Name</th>
-                            <th className="px-4 py-3">Role</th>
-                            <th className="px-4 py-3">Created at</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white">
-                        {users?.map((user) => {
-                            return (
-                                <tr key={user.id} className="h-10">
-                                    <td className=" ">
-                                        <Image 
-                                            src="/edit.svg"
-                                            alt="Edit Profile"
-                                            className="mx-auto"
-                                            width={20}
-                                            height={20}
-                                            onClick={() => editModal.onOpen({
-                                                section: user.name,
-                                                description: user.role
-                                            })}
-                                        />
-                                    </td>
-                                    <td className="px-4 py-3">{user.username}</td>
-                                    <td className="px-4 py-3">{user.name}</td>
-                                    <td className="px-4 py-3">{user.role}</td>
-                                    <td className="px-4 py-3">{user.createdAt}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <AccountList users={users}/>
             </div>
         </div>
         </>
