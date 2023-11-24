@@ -90,6 +90,7 @@ const EditProfilModal = () => {
           </label>
 
           <input
+            name="username"
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
             defaultValue={editprofilmodal.data.username}
@@ -103,6 +104,7 @@ const EditProfilModal = () => {
           </label>
 
           <input
+            name="name"
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
             defaultValue={editprofilmodal.data.name}

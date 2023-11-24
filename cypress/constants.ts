@@ -1,8 +1,8 @@
 
 export const DEFAULT_USER = {
-    id: "65509bbee1aefa36d2320ac1",
-    username: "admin",
-    name: "admin",
+    id: "65535fe3cd5ac9d43b862ef6",
+    username: "dummy1",
+    name: "naufal",
     password: "123",
     role: "ADMIN",
 },

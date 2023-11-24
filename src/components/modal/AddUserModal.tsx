@@ -69,6 +69,7 @@ const AddUserModal = () => {
           </label>
 
           <input
+            name="username"
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
             placeholder="Enter new username"
@@ -82,6 +83,7 @@ const AddUserModal = () => {
           </label>
 
           <input
+            name="name"
             type="text"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
             placeholder="Enter new name"
@@ -95,6 +97,7 @@ const AddUserModal = () => {
           </label>
 
           <input
+            name="password"
             type="password"
             className="w-full border-2 border-black rounded-lg p-2 mt-2"
             placeholder="Enter  new password"
