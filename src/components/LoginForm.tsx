@@ -40,54 +40,49 @@ export default function LoginForm() {
 
     return (
         <form className="w-full h-full items-center" onSubmit={onSubmit}>
-            <div className="text-center">
-                <div className="text-4xl font-bold mt-14 mb-3">
-                    Login
+            <div className="border border-black text-center rounded-3xl">
+                <div className="text-5xl underline underline-offset-4 my-14">
+                    Welcome!
                 </div>
-                <div className='text-stone-500 mx-20 mt-4 text-xl'>
-                    Tidak punya akun atau lupa kata sandi? Hubungi administrator Anda.
-                </div>
-                <div className="flex flex-col mt-16">
+                <div className="flex flex-col mt-3.5">
                     <label
                         htmlFor="userName"
-                        className="text-left text-neutral-500 font-semibold ml-20 py-1"
+                        className="text-left font-semibold ml-20 py-1"
                     >
                         Username
                     </label>
                     <input
                         type="username"
                         name="username"
-                        placeholder="Masukkan username di sini"
-                        className="bg-[#FDF2F8] focus:bg-white placeholder-shown:bg-white rounded border border-neutral-300 mx-20 p-3 transition duration-300"
+                        placeholder=" "
+                        className="bg-[#FDF2F8] focus:bg-white placeholder-shown:bg-white border border-black mx-20 rounded py-1 px-2 transition duration-300"
                         value={loginData.username}
                         onChange={onChange}
                         required
                     >
                     </input>
                 </div>
-                <div className="flex flex-col mt-6">
+                <div className="flex flex-col mt-3.5">
                     <label
                         htmlFor="password"
-                        className="text-left text-neutral-500 font-semibold ml-20 py-1"
+                        className="text-left font-semibold ml-20 py-1"
                     >
                         Password
                     </label>
                     <input
                         type="password"
                         name="password"
-                        placeholder="Masukkan password di sini"
-                        className="bg-[#FDF2F8] focus:bg-white placeholder-shown:bg-white rounded border border-neutral-300 mx-20 p-3 transition duration-300"
+                        placeholder=" "
+                        className="bg-[#FDF2F8] focus:bg-white placeholder-shown:bg-white border border-black mx-20 rounded py-1 px-2 transition duration-300"
                         value={loginData.password}
                         onChange={onChange}
                         required
                     >
                     </input>
                 </div>
-                <div className="flex flex-col">
-                    <button className="bg-[#001118] text-white p-3 mt-16 mb-14 mx-20 rounded-lg" type="submit">
-                        Login
-                    </button>
-                </div>
+                <button className="bg-[#DB2777] text-white p-3 mt-5 mb-14 rounded-lg" type="submit">
+                    Login
+                </button>
             </div>
         </form>
     )
