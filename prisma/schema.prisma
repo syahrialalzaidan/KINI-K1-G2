@@ -44,3 +44,22 @@ model TransactionItem {
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId String?      @db.ObjectId
 }
+
+model Produk {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  jenisBrg      JenisBarang   
+  namaBrg       String        @unique
+  hargaBrg      Int
+  stok          Int        
+  tglTerima     DateTime      @default(now())
+  tglUpdate     DateTime      @updatedAt
+  penerima      String
+  image         String        
+}
+
+enum JenisBarang {
+  FoodNBeverage
+  RumahTangga
+  Kecantikan
+  Kesehatan
+}

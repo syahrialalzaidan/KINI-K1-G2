@@ -6,13 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
-    "@prisma/client": "^5.5.2",
+    "@prisma/client": "^5.6.0",
+    "axios": "^1.6.1",
+    "@headlessui/react": "^1.7.17",
     "bcrypt": "^5.1.1",
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
+    "class-variance-authority": "^0.7.0",
+    "mongoose": "^8.0.1",
     "next": "13.5.6",
     "next-auth": "^4.24.4",
     "react": "^18",
@@ -20,6 +25,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "recharts": "^2.9.3",
+    "tailwind-merge": "^2.0.0",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
@@ -28,10 +34,11 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
+    "cypress": "^13.5.1",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "postcss": "^8",
-    "prisma": "^5.5.2",
+    "prisma": "^5.6.0",
     "tailwindcss": "^3",
     "typescript": "^5"
   }

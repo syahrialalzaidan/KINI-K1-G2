@@ -1,24 +1,28 @@
 import { create } from "zustand";
 
 interface AddUserModalData {
-  section: string;
-  description: string;
+  username: string;
+  name: string;
+  password: string;
+  role: string;
 }
 
 interface AddUserModalStore {
   isOpen: boolean;
   data: AddUserModalData;
-  onOpen: (data?: AddUserModalData) => void;
+  onOpen: () => void;
   onClose: () => void;
 }
 
 const useAddUserModal = create<AddUserModalStore>((set) => ({
   isOpen: false,
   data: {
-    section: "",
-    description: "",
+    username: "",
+    name: "",
+    password: "",
+    role: "",
   },
-  onOpen: (data) => set({ isOpen: true, data }),
+  onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
 
