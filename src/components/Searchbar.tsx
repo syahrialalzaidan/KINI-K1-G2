@@ -5,9 +5,9 @@ import React, { useState } from "react"
 import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
-const SearchButton = ({ otherClasses }: { otherClasses: String }) => (
+const SearchButton = () => (
     <button 
-    type="submit" className={`px-3 ${otherClasses}`}
+    type="submit" className="px-3"
     >
         <IoSearch size={30} />
     </button>
@@ -43,13 +43,13 @@ export default function Searchbar() {
 
     return (
         <form onSubmit={handleSearch}>
-            <div className="flex max-w-md mx-auto overflow-hidden sm:max-w-screen-lg">
+            <div className="flex max-w-md mx-auto overflow-hidden rounded-lg sm:max-w-screen-lg">
                 <SearchBarang 
                     barang = {barang}
                     setBarang = {setBarang}
                 />
-                <div className="self-start mt-2">
-                    <SearchButton otherClasses="" />
+                <div className="self-start bg-white h-12 pt-2">
+                    <SearchButton />
                 </div>
             </div>
         </form>

@@ -24,9 +24,9 @@ export default function SearchBarang({ barang, setBarang }: SearchBarangProps) {
         <div className="max-w-md overflow-hidden md:max-w-screen-lg">
             <Combobox value={barang} onChange={setBarang}>
                 <div className="">
-                    {/* inpput column */}
+                    {/* input column */}
                     <Combobox.Input 
-                        className="w-[400px] sm:w-[550px] h-12 pl-3"
+                        className="w-[400px] sm:w-[550px] h-12 pl-3 search-manufactur__input"
                         placeholder="Cari barang..."
                         displayValue={(barang: string) => barang}
                         onChange={(e) => setQuery(e.target.value)}
@@ -38,7 +38,7 @@ export default function SearchBarang({ barang, setBarang }: SearchBarangProps) {
                         leave="transisition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
-                        afterLeave={() => setQuery("")}
+                        afterLeave={() => ("")}
                     >
                         {/* option while typing */}
                         <Combobox.Options className="w-[550px]">
