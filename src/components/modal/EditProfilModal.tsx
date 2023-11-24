@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { NextResponse } from "next/server";
 
 const EditProfilModal = () => {
-  const router = useRouter()
+  const router = useRouter();
   const editprofilmodal = useEditProfilModal();
 
   const [role, setRole] = useState("");
@@ -20,58 +20,61 @@ const EditProfilModal = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/account/${id}`, {
-        method: 'DELETE',})
+      await fetch(process.env.NEXT_PUBLIC_API_URL + `/api/account/${id}`, {
+        method: "DELETE",
+      });
 
-      router.refresh()
-      toast.success('Akun berhasil dihapus!')
+      router.refresh();
+      toast.success("Akun berhasil dihapus!");
       editprofilmodal.onClose();
     } catch (error: any) {
-      toast.error(error.message)
-      return NextResponse.json(error)
+      toast.error(error.message);
+      return NextResponse.json(error);
     }
-  }
+  };
 
   // TODO: Handle Username sama
   const handleUpdate = async (id: string) => {
     try {
       if (username === "" || name === "" || role === "") {
-        throw new Error('Field tidak boleh kosong!')
+        throw new Error("Field tidak boleh kosong!");
       }
 
-      const res = await fetch(`http://localhost:3000/api/account/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username,
-          name,
-          role
-        })
-      })
-      
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + `/api/account/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            name,
+            role,
+          }),
+        }
+      );
+
       if (res.ok) {
-        router.refresh()
-        toast.success('Akun berhasil diperbarui!')
+        router.refresh();
+        toast.success("Akun berhasil diperbarui!");
         editprofilmodal.onClose();
       }
 
       if (res.status === 406) {
-        throw new Error("Username sudah ada!")
+        throw new Error("Username sudah ada!");
       }
-      
     } catch (error: any) {
-      toast.error(error.message)
-      return NextResponse.json(error)
+      toast.error(error.message);
+      return NextResponse.json(error);
     }
-  } 
+  };
 
   useEffect(() => {
-    setUsername(editprofilmodal.data.username)
-    setName(editprofilmodal.data.name)
-    setRole(editprofilmodal.data.role)
-  }, [editprofilmodal])
+    setUsername(editprofilmodal.data.username);
+    setName(editprofilmodal.data.name);
+    setRole(editprofilmodal.data.role);
+  }, [editprofilmodal]);
 
   const bodyElement = (
     <div className="p-8">
@@ -134,7 +137,7 @@ const EditProfilModal = () => {
         <button
           className="bg-[#FF4747] text-white py-3 px-4 rounded-md hover:scale-110"
           onClick={() => {
-            handleDelete(editprofilmodal.data.id)
+            handleDelete(editprofilmodal.data.id);
           }}
         >
           Hapus Akun
@@ -143,7 +146,7 @@ const EditProfilModal = () => {
         <button
           className="bg-ungu text-white py-3 px-4 rounded-md hover:scale-110"
           onClick={() => {
-            handleUpdate(editprofilmodal.data.id)
+            handleUpdate(editprofilmodal.data.id);
           }}
         >
           Simpan

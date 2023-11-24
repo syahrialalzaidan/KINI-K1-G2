@@ -21,36 +21,38 @@ const AddUserModal = () => {
   const handleSubmit = async () => {
     try {
       if (!username || !name || !password || !role) {
-        throw new Error("Data tidak lengkap!")
+        throw new Error("Data tidak lengkap!");
       }
-      const res = await fetch('http://localhost:3000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username,
-          name,
-          password,
-          role
-        })
-      })
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + `/api/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            name,
+            password,
+            role,
+          }),
+        }
+      );
 
       if (res.ok) {
-        router.refresh()
-        toast.success("Akun berhasil dibuat!")
+        router.refresh();
+        toast.success("Akun berhasil dibuat!");
         addusermodal.onClose();
       }
 
       if (res.status === 406) {
-        throw new Error("Username sudah ada!")
+        throw new Error("Username sudah ada!");
       }
-      
     } catch (error: any) {
-      toast.error(error.message)
-      return NextResponse.json(error)
+      toast.error(error.message);
+      return NextResponse.json(error);
     }
-  }
+  };
 
   const bodyElement = (
     <div className="p-8">

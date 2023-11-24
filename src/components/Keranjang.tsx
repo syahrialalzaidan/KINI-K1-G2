@@ -74,7 +74,7 @@ export default function Keranjang({
       <div className="barangList">
         {CartList?.map((cartItem, cartIndex) => {
           return (
-            <div className="w-[452px] h-[148px] relative border-b-[2px] border-zinc-200">
+            <div key={cartIndex} className="w-[452px] h-[148px] relative border-b-[2px] border-zinc-200">
               <img
                 src={cartItem.image}
                 className="w-[106px] h-[106px] left-[29px] top-[21px] absolute"
