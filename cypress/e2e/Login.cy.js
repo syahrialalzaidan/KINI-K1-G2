@@ -1,5 +1,4 @@
 import { DEFAULT_USER } from '../constants'
-// import EditProfilModal from "../../src/components/modal/EditProfilModal";
 
 describe("Login test",() => {
     beforeEach(() => {
@@ -17,8 +16,8 @@ describe("Login test",() => {
     })
 
     it("Mengarah ke admin page jika berhasil login", () => {
-        cy.get("[type=username]").type("admin");
-        cy.get("[type=password]").type("123");
+        cy.get("[type=username]").type(DEFAULT_USER.username);
+        cy.get("[type=password]").type(DEFAULT_USER.password);
         cy.get("[type=submit]").click();
 
         cy.location('pathname').should('eq', '/admin')
