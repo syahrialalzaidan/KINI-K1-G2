@@ -35,6 +35,10 @@ const EditProfilModal = () => {
   // TODO: Handle Username sama
   const handleUpdate = async (id: string) => {
     try {
+      if (username === "" || name === "" || role === "") {
+        throw new Error('Field tidak boleh kosong!')
+      }
+
       const res = await fetch(`http://localhost:3000/api/account/${id}`, {
         method: 'PATCH',
         headers: {

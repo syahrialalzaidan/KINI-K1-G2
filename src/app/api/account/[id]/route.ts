@@ -33,6 +33,10 @@ export async function PATCH(request: Request, { params }: { params: Params }) {
     try{
         const data = await request.json()
 
+        if (data?.username === null || data?.name === null || data?.role === null) {
+            return NextResponse.json({ error: 'Data tidak boleh kosong' }, { status: 400 })
+        }
+
         const user = await prisma.user.findUnique({
             where: {
                 id: params.id
