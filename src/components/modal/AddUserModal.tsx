@@ -21,7 +21,6 @@ const AddUserModal = () => {
   const handleSubmit = async () => {
     try {
       if (!username || !name || !password || !role) {
-        toast.error("Isi data dengan lengkap!");
         throw new Error("Data tidak lengkap!")
       }
       const res = await fetch('http://localhost:3000/api/auth/register', {
