@@ -156,7 +156,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
           </div>
         ) : (
           <BiBasket
-            className="w-24 h-24 cursor-pointer"
+            className="w-24 h-24 mr-8 cursor-pointer"
             onClick={() => setShow(true)}
           />
         )}
