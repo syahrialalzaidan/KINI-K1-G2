@@ -54,10 +54,10 @@ export default function History(props: HistoryProps) {
     switch (sortCriteria) {
       case "date":
         return transactions.sort(
-          (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
+          (a, b) => b.createdAt.getTime() - a.createdAt.getTime() 
         );
       case "price":
-        return transactions.sort((a, b) => a.total - b.total);
+        return transactions.sort((a, b) => b.total - a.total);
       case "name":
         return transactions.sort((a, b) => a.pic.localeCompare(b.pic));
       default:

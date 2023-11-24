@@ -2,7 +2,7 @@ import { DEFAULT_USER } from '../constants'
 
 describe("Login test",() => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000");
+        cy.visit(NEXT_PUBLIC_API_URL);
     });
 
     it("Memastikan terdapat field untuk username dan password", () => {
