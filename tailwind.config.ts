@@ -13,8 +13,9 @@ const config: Config = {
         ungu : "#A706C1",
         'ungu-mid' : "#FCD4FF",
         primary : "#04364A",
+        secondary0_5: "#FDF2F8",
         secondary1 : "#176B87",
-        secodndary2 : "#64CCC5",
+        secondary2 : "#64CCC5",
         secondary3 : "#DAFFFB",
         'secondary-warehouse' : "#DB2777"
 
