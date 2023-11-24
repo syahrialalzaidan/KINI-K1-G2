@@ -7,18 +7,13 @@ interface AddUserModalData {
 
 interface AddUserModalStore {
   isOpen: boolean;
-  data: AddUserModalData;
-  onOpen: (data?: AddUserModalData) => void;
+  onOpen: () => void;
   onClose: () => void;
 }
 
 const useAddUserModal = create<AddUserModalStore>((set) => ({
   isOpen: false,
-  data: {
-    section: "",
-    description: "",
-  },
-  onOpen: (data) => set({ isOpen: true, data }),
+  onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
 
