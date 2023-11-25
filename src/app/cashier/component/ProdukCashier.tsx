@@ -146,7 +146,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
           <input
             type="text"
             placeholder="Cari barang"
-            value={searchQuery}
+            value={searchQuery} 
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-[212px] h-12 px-3 py-2 rounded border-2 border-slate-400 mt-2"
           />
@@ -203,7 +203,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
                     src={productItem.image}
                     className="w-32 h-32 justify-center items-center inline-flex"
                   />
-                  <p className="text-slate-400 text-base font-bold leading-tight mt-[11px] text-center">
+                  <p className="text-[#4A8C87] text-base font-bold leading-tight mt-[11px] text-center">
                     {productItem.namaBrg}
                   </p>
                   <p className="text-black text-xs font-normal leading-[18px] mt-[6px] text-center">
@@ -213,7 +213,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
                     }).format(productItem.hargaBrg)}
                   </p>
                   <button
-                    className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 justify-center items-center gap-1 inline-flex mt-[11px]"
+                    className="w-32 h-8 px-3 py-2 rounded border-2 border-[#4A8C87] justify-center items-center gap-1 inline-flex mt-[11px] transition delay-50 ease-in-out hover:bg-[#BFE7E4]"
                     onClick={() => {
                       if (cart.find((item) => item.id === productItem.id)) {
                         setCart(
@@ -234,7 +234,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
                       }
                     }}
                   >
-                    <p className="text-slate-400 text-[9px] font-medium leading-[15px]">
+                    <p className="text-[#4A8C87] text-[9px] font-medium leading-[15px]">
                       Tambah ke Keranjang
                     </p>
                   </button>

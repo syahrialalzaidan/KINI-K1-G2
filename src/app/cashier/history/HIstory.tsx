@@ -95,7 +95,7 @@ export default function History(props: HistoryProps) {
             <select
               value={filterCriteria}
               onChange={handleFilterChange}
-              className="bg-transparent focus:outline-none focus:border-none text-ungu flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
+              className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
             >
               <option value="all">All</option>
               <option value="cash">Cash</option>
@@ -109,7 +109,7 @@ export default function History(props: HistoryProps) {
             <select
               value={sortCriteria}
               onChange={handleSortChange}
-              className="bg-transparent focus:outline-none focus:border-none text-ungu flex w-32 lg:w-40 py-3 px-7 lg:px-10 gap-2 rounded-lg"
+              className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-40 py-3 px-7 lg:px-10 gap-2 rounded-lg"
             >
               <option value="date">Date</option>
               <option value="price">Price</option>
@@ -150,7 +150,7 @@ export default function History(props: HistoryProps) {
                 <td className="py-4 px-8 text-left">{item.paymentmethod}</td>
                 <td className="py-4 px-8 text-left">
                   <button
-                    className="bg-[#BFE7E4] rounded-md w-28 p-3 text-white"
+                    className="bg-[#4A8C87] rounded-md w-28 p-3 text-white"
                     onClick={() => {
                       detailTransaksiModal.onOpen(item.items);
                     }}
