@@ -55,12 +55,15 @@ export default function ProdukCashier({ products }: ProductListProps) {
   const [dataapi, setDataapi] = useState<TransactionApi>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const sortOptions = ['A-Z', 'Z-A'];
+  const categoryOptions = ['FoodNBeverage', 'RumahTangga', 'Kecantikan', 'Kesehatan'];
 
   const sortAndFilterProducts = (order: 'asc' | 'desc') => {
     const filteredProducts = products.filter((product) =>
-      product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase())
+      product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedCategory ? product.jenisBrg === selectedCategory : true)
     );
 
     const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -158,7 +161,23 @@ export default function ProdukCashier({ products }: ProductListProps) {
             </option>
           ))}
         </select>
+
+        {/* Category dropdown */}
+        <select
+          value={selectedCategory || ''}
+          onChange={(e) => setSelectedCategory(e.target.value || null)}
+          className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
+        >
+          <option value="">All Categories</option>
+          {categoryOptions.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
+
+      
 
       <div className="flex gap-4 mt-8">
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
