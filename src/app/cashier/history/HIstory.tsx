@@ -90,8 +90,8 @@ export default function History(props: HistoryProps) {
 
         <div className="flex justify-start flex-row gap-6">
           {/* Filter dropdown */}
-          <div className="flex rounded-lg px-2 bg-ungu-mid">
-            <FaFilter className="ml-2 text-lg lg:text-2xl text-ungu absolute self-center" />
+          <div className="flex rounded-lg px-2 bg-[#BFE7E4]">
+            <FaFilter className="ml-2 text-lg lg:text-2xl text-[#4A8C87] absolute self-center" />
             <select
               value={filterCriteria}
               onChange={handleFilterChange}
@@ -104,8 +104,8 @@ export default function History(props: HistoryProps) {
           </div>
 
           {/* Sort dropdown */}
-          <div className="flex rounded-lg px-2 bg-ungu-mid">
-            <FaSort className="ml-2 text-lg lg:text-2xl text-ungu absolute self-center" />
+          <div className="flex rounded-lg px-2 bg-[#BFE7E4]">
+            <FaSort className="ml-2 text-lg lg:text-2xl text-[#4A8C87] absolute self-center" />
             <select
               value={sortCriteria}
               onChange={handleSortChange}
@@ -120,7 +120,7 @@ export default function History(props: HistoryProps) {
 
         <table className="mt-8 max-w-screen table-fixed md:w-4/5  shadow-lg overflow-x-scroll">
           <thead className="overflow-x-scroll">
-            <tr className="bg-ungu-mid rounded-xl text-ungu">
+            <tr className="bg-[#BFE7E4] rounded-xl text-[#4A8C87]">
               <th className="py-4 px-8 font-medium text-left rounded-tl-xl">
                 Transaction Date
               </th>
@@ -150,7 +150,7 @@ export default function History(props: HistoryProps) {
                 <td className="py-4 px-8 text-left">{item.paymentmethod}</td>
                 <td className="py-4 px-8 text-left">
                   <button
-                    className="bg-ungu rounded-md w-28 p-3 text-white"
+                    className="bg-[#BFE7E4] rounded-md w-28 p-3 text-white"
                     onClick={() => {
                       detailTransaksiModal.onOpen(item.items);
                     }}

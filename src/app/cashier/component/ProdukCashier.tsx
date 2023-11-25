@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BiBasket } from "react-icons/bi";
+import { FaFilter, FaSort } from "react-icons/fa";
 
 interface CashierPageProps {
   produk: Array<Object>;
@@ -113,13 +114,14 @@ export default function ProdukCashier({ products }: ProductListProps) {
   };
 
   return (
-    <div className="">
+    <div>
       <Account nama={session?.user?.name} role="Cashier" />
 
       <div id="cashierHeader" className="flex">
-        <div className="text-4xl font-bold mr-24 flex justify-center items-center">
+        <div className="text-4xl font-bold mr-8 flex justify-center items-center">
           Cashier
         </div>
+
         <div>
           {show ? (
             <div>
@@ -132,53 +134,62 @@ export default function ProdukCashier({ products }: ProductListProps) {
             </div>
           ) : (
             <BiBasket
-              className="w-12 h-12 mr-8 ml-16 cursor-pointer"
+              className="w-12 h-12 mr-8 ml-8 cursor-pointer"
               onClick={() => setShow(true)}
             />
           )}
         </div>
       </div>
 
-      <div className="flex gap-4 mt-8">
-        {/* Search Bar */}
-        <input
-          type="text"
-          placeholder="Cari barang"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-[212px] h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
-        />
+        <div className="flex gap-4 mt-8 mb-10">
+          {/* Search Bar */}
+          <input
+            type="text"
+            placeholder="Cari barang"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-[212px] h-12 px-3 py-2 rounded border-2 border-slate-400 mt-2"
+          />
+        </div>
 
-        {/* Sorting dropdown */}
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-          className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
-        >
-          {sortOptions.map((option) => (
-            <option key={option} value={option === 'A-Z' ? 'asc' : 'desc'}>
-              Sort {option}
-            </option>
-          ))}
-        </select>
 
-        {/* Category dropdown */}
-        <select
-          value={selectedCategory || ''}
-          onChange={(e) => setSelectedCategory(e.target.value || null)}
-          className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
-        >
-          <option value="">All Categories</option>
-          {categoryOptions.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="flex justify-start flex-row gap-6">
+          {/* Sorting dropdown */}
+          <div  className="flex rounded-lg px-2 bg-[#BFE7E4]">
+            <FaSort className="ml-2 text-lg lg:text-2xl text-[#4A8C87] absolute self-center" />
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+              className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
+            >
+              {sortOptions.map((option) => (
+                <option key={option} value={option === 'A-Z' ? 'asc' : 'desc'}>
+                  Sort {option}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      
+          {/* Category dropdown */}
+          <div className="flex rounded-lg px-2 bg-[#BFE7E4]">
+            <FaFilter className="ml-2 text-lg lg:text-xl text-[#4A8C87] absolute self-center" />
+            <select
+              value={selectedCategory || ''}
+              onChange={(e) => setSelectedCategory(e.target.value || null)}
+              className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
+            >
+              <option value="">All Categories</option>
+              {categoryOptions.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
 
+
+        </div>
+        
       <div className="flex gap-4 mt-8">
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
           {sortedAndFilteredProducts.map((productItem) => {
