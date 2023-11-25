@@ -92,6 +92,30 @@ export default function ProdukCashier({ products }: ProductListProps) {
   return (
     <>
       <Account nama={session?.user?.name} role="Cashier" />
+
+      <div id="cashierHeader" className="flex">
+        <div className="text-4xl font-bold mx-16">
+          Cashier
+        </div>
+        <div className="mx-16">
+          {show ? (
+            <div>
+              <Keranjang
+                CartList={cart}
+                setCart={setCart}
+                setShow={setShow}
+                handleCheckout={handleCheckout}
+              />
+            </div>
+          ) : (
+            <BiBasket
+              className="w-12 h-12 mr-8 ml-16 cursor-pointer"
+              onClick={() => setShow(true)}
+            />
+          )}
+        </div>
+      </div>
+
       <div className="flex gap-4 mt-8">
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
           {products.map((productItem) => {
@@ -145,21 +169,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
             );
           })}
         </div>
-        {show ? (
-          <div className="">
-            <Keranjang
-              CartList={cart}
-              setCart={setCart}
-              setShow={setShow}
-              handleCheckout={handleCheckout}
-            />
-          </div>
-        ) : (
-          <BiBasket
-            className="w-24 h-24 mr-8 cursor-pointer"
-            onClick={() => setShow(true)}
-          />
-        )}
+
       </div>
     </>
   );

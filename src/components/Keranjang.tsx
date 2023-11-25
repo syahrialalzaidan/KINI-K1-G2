@@ -54,6 +54,7 @@ export default function Keranjang({
           onClick={() => setShow(false)}
         />
       </div>
+
       <div className="justify-between flex mb-[49px]">
         <div className="text-slate-950 text-4xl font-bold font-['Noto Sans'] leading-[45px]">
           Keranjang
@@ -141,14 +142,14 @@ export default function Keranjang({
                 />
               </div>
               <span className="left-[168px] top-[55px] absolute text-black text-lg font-normal leading-[27px]">
-                Rp{cartItem.hargaBrg * cartItem.quantity}
+                Rp{new Intl.NumberFormat("id-ID", {minimumFractionDigits: 2,}).format(cartItem.hargaBrg * cartItem.quantity)}
               </span>
             </div>
           );
         })}
       </div>
       {/* text field diskon */}
-      <div id="discountTxtField" className="mt-[50px] justify-between flex">
+      {/* <div id="discountTxtField" className="mt-[50px] justify-between flex">
         <form>
           <input
             type="text"
@@ -164,7 +165,7 @@ export default function Keranjang({
             </button>
           </div>
         </form>
-      </div>
+      </div> */}
       {/* info subtotal dll */}
       <div id="priceLists" className="mt-[38px]">
         <div className="justify-between flex">
@@ -178,12 +179,12 @@ export default function Keranjang({
             }).format(totalPrice)}
           </div>
         </div>
-        <div className="justify-between flex mt-[14px]">
+        {/* <div className="justify-between flex mt-[14px]">
           <div className="text-black text-xl font-normal leading-[30px]">
             Potongan
           </div>
           <div className="text-black text-xl font-normal">Rpxx.xxx,00</div>
-        </div>
+        </div> */}
         <div className="justify-between flex mt-[14px]">
           <div className="text-black text-xl font-normal leading-[30px]">
             Pajak
