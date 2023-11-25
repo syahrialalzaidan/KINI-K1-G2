@@ -53,6 +53,11 @@ export default function ProdukCashier({ products }: ProductListProps) {
   const [cart, setCart] = useState<CartProduct[]>([]);
   const [show, setShow] = useState(false);
   const [dataapi, setDataapi] = useState<TransactionApi>();
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const filteredProducts = products.filter((product) =>
+    product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     console.log("USE EFFECT", cart);
@@ -90,14 +95,14 @@ export default function ProdukCashier({ products }: ProductListProps) {
   };
 
   return (
-    <>
+    <div className="">
       <Account nama={session?.user?.name} role="Cashier" />
 
       <div id="cashierHeader" className="flex">
-        <div className="text-4xl font-bold mx-16">
+        <div className="text-4xl font-bold mr-24 flex justify-center items-center">
           Cashier
         </div>
-        <div className="mx-16">
+        <div>
           {show ? (
             <div>
               <Keranjang
@@ -117,8 +122,19 @@ export default function ProdukCashier({ products }: ProductListProps) {
       </div>
 
       <div className="flex gap-4 mt-8">
+        {/* Search Bar */}
+        <input
+          type="text"
+          placeholder="Cari barang"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-[212px] h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
+        />
+      </div>
+
+      <div className="flex gap-4 mt-8">
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
-          {products.map((productItem) => {
+          {filteredProducts.map((productItem) => {
             return (
               <div className="flex">
                 <div
@@ -171,6 +187,6 @@ export default function ProdukCashier({ products }: ProductListProps) {
         </div>
 
       </div>
-    </>
+    </div>
   );
 }
