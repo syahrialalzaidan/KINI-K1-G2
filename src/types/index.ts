@@ -10,8 +10,8 @@ export interface ProdukProps {
 }
 
 export const items = [
-    { cat: 'FoodNBeverage' },
-    { cat: 'Kecantikan' },
-    { cat: 'Kesehatan' },
-    { cat: 'RumahTangga' }
+    'FoodNBeverage',
+    'Kecantikan',
+    'Kesehatan',
+    'RumahTangga'
 ]

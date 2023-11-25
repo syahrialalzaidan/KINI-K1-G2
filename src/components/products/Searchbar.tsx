@@ -1,6 +1,5 @@
 "use client";
 
-import SearchBarang from "./SearchBarang"
 import React, { useState } from "react"
 import { IoSearch } from "react-icons/io5";
 import { useRouter, useSearchParams } from "next/navigation";

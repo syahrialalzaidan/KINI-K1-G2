@@ -13,36 +13,38 @@ import toast from 'react-hot-toast';
 import { NextResponse } from 'next/server';
 import { UploadButton } from '@/app/utils/uploadthing';
 import { Pencil } from 'lucide-react';
-import { UploadDropzone } from '@uploadthing/react';
 
 export default function AddBarang() {
   const router = useRouter()
 
   const [jenisBrg, setJenisBrg] = useState(items[0])
   const [namaBrg, setNamaBrg] = useState("")
-  const [stok, setStok] = useState("")
-  const [harga, setHarga] = useState("")
-  const [tanggal, setTanggal] = useState("")
+
+  const [stokTemp, setStokTemp] = useState("")
+  const stok = parseInt(stokTemp)
+
+  const [hargaTemp, setHargaTemp] = useState("")
+  const harga = parseInt(hargaTemp)
+
   const [penerima, setPenerima] = useState("")
   const [image, setImage] = useState("")
 
   const handleSubmit = async() => {
     try {
-      console.log(jenisBrg, namaBrg, stok, harga, tanggal, penerima, image)
-      if (!namaBrg || !stok || !harga || !tanggal || !penerima || !image) {
+      console.log(jenisBrg, namaBrg, stok, harga, penerima, image)
+      if (!namaBrg || !stok || !harga || !penerima || !image) {
         toast.error("Isi data dengan lengkap!")
       }
       const res = await fetch("http://localhost:3000/api/product", {
         method:"POST",
-        headers: {
-          'Content-Type': 'text/plain'
+        headers: {  
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           jenisBrg,
           namaBrg,
-          stok,
           harga,
-          tanggal,
+          stok,
           penerima,
           image
         })
@@ -57,6 +59,10 @@ export default function AddBarang() {
       console.log("tes 2")
       if (res.status === 406) {
         throw new Error("Nama produk sudah ada!")
+      }
+
+      else {
+        toast.error("testing")
       }
 
     } catch (error: any) {
@@ -93,11 +99,11 @@ export default function AddBarang() {
               <label className='font-light opacity-30 text-sm ml-1'>
                 Jenis Barang
               </label>
-              <div className="w-full rounded-lg mt-2 sm:w-72">
+              <div className="w-full rounded-lg mt-2">
                 <Listbox value={jenisBrg} onChange={setJenisBrg}>
                   <div className="relative mt-1">
-                    <Listbox.Button className="border border-slate-300 relative w-full cursor-default rounded-lg py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                      <span className="block truncate">{jenisBrg.cat}</span>
+                    <Listbox.Button className="border border-slate-300 relative w-full cursor-default rounded-lg py-2.5 pl-3 pr-80 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                      <span className="block truncate">{jenisBrg}</span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <ChevronUpDownIcon
                           className="h-5 w-5 text-gray-400"
@@ -129,7 +135,7 @@ export default function AddBarang() {
                                     selected ? 'font-medium' : 'font-normal'
                                   }`}
                                 >
-                                  {item.cat}
+                                  {item}
                                 </span>
                                 {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
@@ -152,20 +158,9 @@ export default function AddBarang() {
               </label>
               <input 
                 type="text"
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-10'
+                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-56'
                 placeholder='Masukkan nama barang'
                 onChange={(e) => setNamaBrg(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className='font-light opacity-30 text-sm ml-1'>
-                  Stok Barang
-              </label>
-              <input 
-                type="text"
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-10'
-                placeholder='Masukkan jumlah barang'
-                onChange={(e) => setStok(e.target.value)}
               />
             </div>
           </div>
@@ -179,21 +174,18 @@ export default function AddBarang() {
                 type="text"
                 className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-44'
                 placeholder='Masukkan harga barang'
-                onChange={(e) => setHarga(e.target.value)}
+                onChange={(e) => setHargaTemp(e.target.value)}
               />
             </div>
             <div>
               <label className='font-light opacity-30 text-sm ml-1'>
-                  Tanggal Penerimaan
+                  Stok Barang
               </label>
               <input 
-                type="datetime-local"
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-44'
-                id='addItems'
-                name='addItems'
-                min="2023-01-01T00:00"
-                max="2028-12-31T23:59"
-                onChange={(e) => setTanggal(e.target.value)}
+                type="text"
+                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-64'
+                placeholder='Masukkan jumlah barang'
+                onChange={(e) => setStokTemp(e.target.value)}
               />
             </div>
           </div>
@@ -238,7 +230,7 @@ export default function AddBarang() {
                     console.log(`ERROR! ${error.message}`);
                     toast.error("Cannot upload the image!")
                   }}
-                  className='mt-28 ml-72 lg:ml-40 sm:ml-80'
+                  className='lg:-mr-40 mt-28 ml-72 lg:ml-40 sm:ml-80'
                 />
               )}
               </div> 
