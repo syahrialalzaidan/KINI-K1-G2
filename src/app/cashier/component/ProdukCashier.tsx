@@ -54,10 +54,25 @@ export default function ProdukCashier({ products }: ProductListProps) {
   const [show, setShow] = useState(false);
   const [dataapi, setDataapi] = useState<TransactionApi>();
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const filteredProducts = products.filter((product) =>
-    product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const sortOptions = ['A-Z', 'Z-A'];
+
+  const sortAndFilterProducts = (order: 'asc' | 'desc') => {
+    const filteredProducts = products.filter((product) =>
+      product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+      const nameA = a.namaBrg.toLowerCase();
+      const nameB = b.namaBrg.toLowerCase();
+      return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    });
+
+    return sortedProducts;
+  };
+
+  const sortedAndFilteredProducts = sortAndFilterProducts(sortOrder);
 
   useEffect(() => {
     console.log("USE EFFECT", cart);
@@ -76,7 +91,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
       paymentmethod: "QRIS",
     });
     console.log("DATA API", dataapi);
-  }, [cart, dataapi]);
+  }, [cart, dataapi, sortOrder, searchQuery]);
 
   const handleCheckout = async () => {
     console.log("CHECKOUT", dataapi);
@@ -130,11 +145,24 @@ export default function ProdukCashier({ products }: ProductListProps) {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-[212px] h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
         />
+
+        {/* Sorting dropdown */}
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+          className="w-32 h-8 px-3 py-2 rounded border-2 border-slate-400 mt-2"
+        >
+          {sortOptions.map((option) => (
+            <option key={option} value={option === 'A-Z' ? 'asc' : 'desc'}>
+              Sort {option}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex gap-4 mt-8">
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
-          {filteredProducts.map((productItem) => {
+          {sortedAndFilteredProducts.map((productItem) => {
             return (
               <div className="flex">
                 <div
