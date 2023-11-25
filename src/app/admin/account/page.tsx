@@ -10,8 +10,13 @@ import axios from "axios";
 
 async function getUsers() {
     try {
-        const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + `/api/account`)
-        return res.data
+        const res = await fetch(
+            process.env.NEXT_PUBLIC_API_URL + `/api/account`,
+            {
+              cache: "no-store",
+            }
+          );
+        return res.json()
     } catch (error: any) {
         console.log(error)
     }
