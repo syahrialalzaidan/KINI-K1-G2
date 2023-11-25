@@ -1,17 +1,42 @@
+default:
+  image: node:latest
+
 stages:
-    - deploy
+  - build
+  - deploy
 
-deploy_prod:
-    stage: deploy
-    image: google/cloud-sdk:alpine
-    environment: PROD
-    only:
-    - main
-    script:
-    - echo $GCP_CLOUD_BUILD_SERVIVE_KEY > /tmp/gcloud-service-key.json
-    - gcloud auth activate-service-account --key-file /tmp/gcloud-service-key.json
-    - gcloud config set project $GCP_PROJECT_ID
-    - gcloud builds submit . --config=cloudbuild.yaml
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
-after_script:
-- rm /tmp/gcloud-service-key.json
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+
+deploy_preview:
+  stage: deploy
+  only:
+    - development
+  script:
+    - npm update
+    - npm install -g vercel
+    - $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine) + ";" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
+    - vercel pull --yes --environment=preview --token=0Zmz5O1hMzEa6BVw9XacmLqr
+    - vercel deploy --token=0Zmz5O1hMzEa6BVw9XacmLqr
+
+deploy_production:
+  stage: deploy
+  only:
+    - master
+  script:
+    - npm update
+    - npm install -g vercel
+    - $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine) + ";" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
+    - vercel pull --yes --environment=production --token=0Zmz5O1hMzEa6BVw9XacmLqr
+    - vercel deploy --prod --token=0Zmz5O1hMzEa6BVw9XacmLqr
