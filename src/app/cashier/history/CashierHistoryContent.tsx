@@ -16,7 +16,7 @@ interface HistoryProps {
   transaction: TransactionWithItems[];
 }
 
-export default function History(props: HistoryProps) {
+export default function CashierHistoryContent(props: HistoryProps) {
   const detailTransaksiModal = useDetailTransaksiModal();
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -54,10 +54,10 @@ export default function History(props: HistoryProps) {
     switch (sortCriteria) {
       case "date":
         return transactions.sort(
-          (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
+          (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
         );
       case "price":
-        return transactions.sort((a, b) => a.total - b.total);
+        return transactions.sort((a, b) => b.total - a.total);
       case "name":
         return transactions.sort((a, b) => a.pic.localeCompare(b.pic));
       default:
@@ -82,8 +82,8 @@ export default function History(props: HistoryProps) {
   return (
     <>
       <DetailTransaksiModal />
-      <div className="max-w-screen">
-        <div className="flex justify-end w-full">
+      <div className="max-w-screen px-[5%]">
+        <div className="flex justify-end">
           <Account nama={session?.user?.name} role="Cashier" />
         </div>
         <h1 className="text-4xl font-bold my-6">Transaction History</h1>

@@ -19,9 +19,9 @@ interface SidebarProps {
 export default function Sidebar(props: SidebarProps) {
   const pathName = usePathname();
 
-  //   const handleSignOut = async () => {
-  //     await signOut();
-  //   };
+    const handleSignOut = async () => {
+      await signOut({callbackUrl: "/"});
+    };
 
   const [open, setOpen] = useState(false);
 
@@ -85,7 +85,7 @@ export default function Sidebar(props: SidebarProps) {
                 {props.role == "cashier" ? "Belanja" : "Gudang"}
               </label>
               <a
-                href={`/${props.role}/catalogue`}
+                href={props.role == "cashier"? `/${props.role}` : `/${props.role}/catalogue` } 
                 className={`px-8 ${
                   pathName === `/${props.role}/catalogue` ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
@@ -102,19 +102,6 @@ export default function Sidebar(props: SidebarProps) {
                 <span className="whitespace-nowrap font-bold">Catalogue</span>
               </a>
 
-              <a
-                href="/"
-                className={`px-8 ${
-                  pathName === `/${props.role}/keranjang` ? "border-l-4" : ""
-                } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
-                  pathName === `/${props.role}/keranjang` ? primaryColor() : ""
-                }  group ${
-                  props.role === "cashier" ? "mt-4" : "hidden"
-                } ${hoverColor()}`}
-              >
-                <SlBasket className="text-2xl" />
-                <span className="whitespace-nowrap font-bold">Keranjang</span>
-              </a>
             </li>
             <li className={`${props.role == "warehouse" ? "hidden" : ""}`}>
               <label className="px-8 text-black/[0.38] text-xs">
@@ -155,6 +142,7 @@ export default function Sidebar(props: SidebarProps) {
           <a
             href="/"
             className={`px-8 flex items-center gap-3 mt-16 p-4 text-[#4C4E64]/[0.87] rounded-lg group hover:bg-red-500 hover:text-white`}
+            onClick={handleSignOut}
           >
             <MdLogout className="text-2xl" />
             <span className="whitespace-nowrap font-bold">Logout</span>

@@ -23,6 +23,7 @@ interface CartListProps {
   CartList: CartProduct[];
   setCart: React.Dispatch<React.SetStateAction<CartProduct[]>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setPaymentMethod: React.Dispatch<React.SetStateAction<string>>;
   handleCheckout: () => void;
 }
 
@@ -31,11 +32,8 @@ export default function Keranjang({
   setCart,
   setShow,
   handleCheckout,
+  setPaymentMethod
 }: CartListProps) {
-  // useEffect(() => {
-  //     setCart(cart)
-  // }, [cart])
-
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -65,6 +63,7 @@ export default function Keranjang({
             className="text-neutral-50 text-sm font-medium font-['Noto Sans'] leading-[21px]"
             onClick={() => {
               setCart([]);
+              setShow(false);
             }}
           >
             Batalkan Transaksi
@@ -75,7 +74,10 @@ export default function Keranjang({
       <div className="barangList">
         {CartList?.map((cartItem, cartIndex) => {
           return (
-            <div key={cartIndex} className="w-[452px] h-[148px] relative border-b-[2px] border-zinc-200">
+            <div
+              key={cartIndex}
+              className="w-[452px] h-[148px] relative border-b-[2px] border-zinc-200"
+            >
               <img
                 src={cartItem.image}
                 className="w-[106px] h-[106px] left-[29px] top-[21px] absolute"
@@ -141,32 +143,33 @@ export default function Keranjang({
                   }}
                 />
               </div>
+
               <span className="left-[168px] top-[55px] absolute text-black text-lg font-normal leading-[27px]">
-                Rp{new Intl.NumberFormat("id-ID", {minimumFractionDigits: 2,}).format(cartItem.hargaBrg * cartItem.quantity)}
+                Rp
+                {new Intl.NumberFormat("id-ID", {
+                  minimumFractionDigits: 2,
+                }).format(cartItem.hargaBrg * cartItem.quantity)}
               </span>
             </div>
           );
         })}
       </div>
-      {/* text field diskon */}
-      {/* <div id="discountTxtField" className="mt-[50px] justify-between flex">
-        <form>
-          <input
-            type="text"
-            placeholder="Masukkan kode diskon"
-            className="w-[312px] mr-[21px] px-2 py-2 bg-white rounded border border-cyan-700 justify-start items-center gap-1 inline-flex"
-          />
-          <div className="w-[119px] h-11 px-3 py-2.5 bg-gray-500 rounded justify-center items-center gap-1 inline-flex">
-            <button
-              type="submit"
-              className="text-neutral-50 text-sm font-medium font-['Noto Sans'] leading-[21px]"
-            >
-              Apply
-            </button>
-          </div>
-        </form>
-      </div> */}
-      {/* info subtotal dll */}
+
+      <div className="mt-2">
+        <label className="text-xl mt-6">Payment Method</label>
+        <div className="p-1 mt-2 border rounded-lg border-gray-300 w-1/2">
+          <select
+            className="px-2 py-2 w-full focus:outline-none bg-white rounded justify-start items-center gap-1 inline-flex"
+            name="paymentMethod"
+            id="paymentMethod"
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
+            <option value="CASH">CASH</option>
+            <option value="QRIS">QRIS</option>
+          </select>
+        </div>
+      </div>
+
       <div id="priceLists" className="mt-[38px]">
         <div className="justify-between flex">
           <div className="text-black text-xl font-normal leading-[30px]">
