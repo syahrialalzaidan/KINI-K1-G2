@@ -52,7 +52,7 @@ export async function PATCH(request: Request, { params }: { params: params}) {
     }
 }
 
-export async function GET({ params }: { params: params}) {
+export async function GET(request: Request, { params }: { params: params}) {
     try {
         const{ id } = params
 

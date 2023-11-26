@@ -100,13 +100,16 @@ export default function ProdukCashier({ products }: ProductListProps) {
 
   const handleCheckout = async () => {
     console.log("CHECKOUT", dataapi);
-    const res = await fetch("http://localhost:3000/api/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataapi),
-    });
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + `/api/transaction`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataapi),
+      }
+    );
     if (res.ok) {
       toast.success("Transaksi berhasil");
     } else {
@@ -195,7 +198,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
         <div className={`flex flex-wrap gap-4 ${show?"w-[60%]" : ""}`}>
           {sortedAndFilteredProducts.map((productItem) => {
             return (
-              <div className="flex">
+              <div className="flex" key={index}>
                 <div
                   id="product"
                   className="w-[168px] h-[280px] p-5 mr-10 relative bg-white rounded-lg shadow"
