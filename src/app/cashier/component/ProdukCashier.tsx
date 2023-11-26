@@ -50,6 +50,7 @@ interface TransactionApi {
 }
 
 export default function ProdukCashier({ products }: ProductListProps) {
+  // Push 26 November 2023 11.52
   const { data: session } = useSession();
   const [cart, setCart] = useState<CartProduct[]>([]);
   const [show, setShow] = useState(false);
