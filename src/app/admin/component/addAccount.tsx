@@ -1,6 +1,5 @@
 'use client'
 import useAddUserModal from "@/hooks/useAddUserModal";
-import AddUserModal from "@/components/modal/AddUserModal";
 
 export default function AddAccount() {
     const addModal = useAddUserModal()
