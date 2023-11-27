@@ -30,7 +30,7 @@ export default function EditBarangAdmin() {
     const [stok, setStok] = useState(detailProduk.data.stok);
   
     const [penerima, setPenerima] = useState(detailProduk.data.penerima)
-    const [image, setImage] = useState(detailProduk.data.image)
+    const [image, setImage] = useState<string | undefined>(detailProduk.data.image)
     
     const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) => setHargaBrg(+e.target.value);
     
@@ -226,7 +226,7 @@ export default function EditBarangAdmin() {
                 <UploadButton
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
-                    setImage(res[0].url);
+                    setImage(res?.[0].url);
                     // Do something with the response
                     console.log("Files: ", res);
                     toast.success("Upload Completed");

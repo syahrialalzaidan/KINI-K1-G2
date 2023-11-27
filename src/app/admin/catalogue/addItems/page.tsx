@@ -29,7 +29,7 @@ export default function AddBarangAdmin() {
   const harga = parseInt(hargaTemp)
 
   const [penerima, setPenerima] = useState("")
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<string | undefined>("")
 
   const handleSubmit = async() => {
     try {
@@ -217,7 +217,7 @@ export default function AddBarangAdmin() {
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
                     toast.loading("Uploading image...");
-                    setImage(res[0].url);
+                    setImage(res?.[0].url);
                     // Do something with the response
                     console.log("Files: ", res);
                     toast.success("Upload Completed");

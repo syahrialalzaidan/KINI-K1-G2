@@ -11,7 +11,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import toast from 'react-hot-toast';
 import { NextResponse } from 'next/server';
-import { UploadButton } from '@/app/utils/uploadthing';
+import { UploadButton, UploadDropzone } from '@/app/utils/uploadthing';
 import { Pencil } from 'lucide-react';
 import useProductDetailsModal from '@/hooks/useProductDetailsModal';
 
@@ -28,7 +28,7 @@ export default function EditBarang() {
     const [stok, setStok] = useState(detailProduk.data.stok);
   
     const [penerima, setPenerima] = useState(detailProduk.data.penerima)
-    const [image, setImage] = useState(detailProduk.data.image)
+    const [image, setImage] = useState<string | undefined>(detailProduk.data.image)
     
     const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) => setHargaBrg(+e.target.value);
     
@@ -58,7 +58,7 @@ export default function EditBarang() {
           if (res.ok) {
             router.refresh()
             toast.success("Produk berhasil diperbarui!")
-            router.push("./")
+            router.push("./?q=")
             
           }
     
@@ -221,10 +221,10 @@ export default function EditBarang() {
                   className="w-full h-64 object-contain"
                 />
               ) : (
-                <UploadButton
+                <UploadDropzone
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
-                    setImage(res[0].url);
+                    setImage(res?.[0].url);
                     // Do something with the response
                     console.log("Files: ", res);
                     toast.success("Upload Completed");
@@ -234,7 +234,7 @@ export default function EditBarang() {
                     console.log(`ERROR! ${error.message}`);
                     toast.error("Cannot upload the image!")
                   }}
-                  className='lg:-mr-40 mt-28 ml-72 lg:ml-40 sm:ml-80'
+                  className='mt-14 ml-72 sm:ml-1'
                 />
               )}
               </div> 
@@ -258,7 +258,7 @@ export default function EditBarang() {
           <button onClick={() => handleUpdate(detailProduk.data.id)} className='bg-pink-500 hover:bg-pink-600 py-1.5 px-8 rounded-lg text-white'>
             SAVE
           </button>
-          <button onClick={() => router.push("./")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
+          <button onClick={() => router.push("./?q=")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
             CANCEL
           </button>
         </div>
