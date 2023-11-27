@@ -11,7 +11,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import toast from 'react-hot-toast';
 import { NextResponse } from 'next/server';
-import { UploadButton } from '@/app/utils/uploadthing';
+import { UploadButton, UploadDropzone } from '@/app/utils/uploadthing';
 import { Pencil } from 'lucide-react';
 import useProductDetailsModal from '@/hooks/useProductDetailsModal';
 
@@ -58,7 +58,7 @@ export default function EditBarang() {
           if (res.ok) {
             router.refresh()
             toast.success("Produk berhasil diperbarui!")
-            router.push("./")
+            router.push("./?q=")
             
           }
     
@@ -76,7 +76,7 @@ export default function EditBarang() {
     <div className="font-noto max-w-md flex flex-col pb-14 mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
       <div className="flex justify-between items-start">
         <div className='flex gap-4 mt-6 sm:-ml-10'>
-          <button className='' onClick={() => router.push("./")}>
+          <button className='' onClick={() => router.push("./?q=")}>
             <IoIosArrowBack color="#DB2777" size={26} />
           </button>
           <p className='text-lg font-semibold text-[#DB2777]'>Catalog</p>
@@ -221,7 +221,7 @@ export default function EditBarang() {
                   className="w-full h-64 object-contain"
                 />
               ) : (
-                <UploadButton
+                <UploadDropzone
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
                     setImage(res[0].url);
@@ -234,7 +234,7 @@ export default function EditBarang() {
                     console.log(`ERROR! ${error.message}`);
                     toast.error("Cannot upload the image!")
                   }}
-                  className='lg:-mr-40 mt-28 ml-72 lg:ml-40 sm:ml-80'
+                  className='mt-14 ml-72 sm:ml-1'
                 />
               )}
               </div> 
@@ -258,7 +258,7 @@ export default function EditBarang() {
           <button onClick={() => handleUpdate(detailProduk.data.id)} className='bg-pink-500 hover:bg-pink-600 py-1.5 px-8 rounded-lg text-white'>
             SAVE
           </button>
-          <button onClick={() => router.push("./")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
+          <button onClick={() => router.push("./?q=")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
             CANCEL
           </button>
         </div>

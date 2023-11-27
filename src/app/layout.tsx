@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
+import "@uploadthing/react/styles.css";
 import './globals.css'
 import Provider from "@/app/context/client-provider"
 import { getServerSession } from "next-auth/next"
