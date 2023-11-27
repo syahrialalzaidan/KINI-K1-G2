@@ -76,7 +76,7 @@ export default function EditBarang() {
     <div className="font-noto max-w-md flex flex-col pb-14 mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
       <div className="flex justify-between items-start">
         <div className='flex gap-4 mt-6 sm:-ml-10'>
-          <button className='' onClick={() => router.push("./?q=")}>
+          <button className='' onClick={() => router.push("/warehouse?q=")}>
             <IoIosArrowBack color="#DB2777" size={26} />
           </button>
           <p className='text-lg font-semibold text-[#DB2777]'>Catalog</p>
