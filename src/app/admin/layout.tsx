@@ -9,7 +9,7 @@ export default function AdminLayout({
   return (
     <>
         <Sidebar role="admin" />
-        <div className="sm:pl-80">
+        <div className="sm:pl-80 bg-[#FBF4FB]">
             {children}
         </div>
     </>
