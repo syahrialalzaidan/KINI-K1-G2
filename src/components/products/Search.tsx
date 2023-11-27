@@ -6,7 +6,7 @@ import Catalog from "./Catalog";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-const SEARCH_API_URL = "http://localhost:3000/api/search"
+const SEARCH_API_URL = process.env.NEXT_PUBLIC_API_URL + "/api/search"
 
 async function searchProduct(searchText: string) {
     const res = await fetch(`${SEARCH_API_URL}?q=${searchText}`)

@@ -1,4 +1,5 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "./products/ProductCard";
+
 
 const getCatalog = async () => {
   try {

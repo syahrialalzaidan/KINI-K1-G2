@@ -22,7 +22,7 @@ build:
 deploy_preview:
   stage: deploy
   only:
-    - main
+    - development
   script:
     - npm update
     - npm install --global vercel

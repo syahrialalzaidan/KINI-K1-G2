@@ -37,7 +37,7 @@ export default function AddBarangAdmin() {
       if (!namaBrg || !stok || !harga || !penerima || !image) {
         toast.error("Isi data dengan lengkap!")
       }
-      const res = await fetch("http://localhost:3000/api/product", {
+      const res = await fetch(process.env.NEXTAUTH_URL + "/api/product", {
         method:"POST",
         headers: {  
           'Content-Type': 'application/json'
