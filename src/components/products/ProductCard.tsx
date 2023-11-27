@@ -8,7 +8,7 @@ export default function ProductCard({produks}: {produks: ProdukProps}) {
     const detailProduk = useProductDetailsModal()
 
     return (
-        <div className="bg-white mb-10 shadow-lg rounded-lg mt-8 sm:w-60">
+        <div className="bg-white mb-10 shadow-lg rounded-lg mt-8 py-5 sm:w-60">
             <ProductDetailsModal />
             <div className="text-center flex justify-center flex-col items-center">
                 <div className="flex justify-center relative w-full h-40 object-contain my-3">
@@ -30,7 +30,11 @@ export default function ProductCard({produks}: {produks: ProdukProps}) {
                 </div>
                 <button 
                     className="bg-pink-500 text-white hover:bg-pink-600 dark:hover:bg-pink-600 h-11 px-8 rounded-xl w-96 mb-2 sm:w-40"
-                    onClick={() => {detailProduk.onOpen(produks)}}
+                    onClick={() => {
+                        detailProduk.onOpen({
+                            ...produks
+                        })
+                    }}
                 >
                     More Detail
                 </button>

@@ -8,7 +8,7 @@ export const getCatalog = async() => {
         })
 
         if (!res.ok) {
-            throw new Error("Faile to fetch the catalog")
+            throw new Error("Failed to fetch the catalog")
         }
 
         return res.json()
@@ -23,10 +23,10 @@ export default async function Catalog() {
 
     const arrProducts: ProdukProps[] = products
 
-    const filteredFNB = arrProducts.filter((item: ProdukProps) => item.jenisBrg === "FoodNBeverage")
-    const filteredKEC = arrProducts.filter((item: ProdukProps) => item.jenisBrg === "Kecantikan")
-    const filteredKES = arrProducts.filter((item: ProdukProps) => item.jenisBrg === "Kesehatan")
-    const filteredRUM = arrProducts.filter((item: ProdukProps) => item.jenisBrg === "RumahTangga")
+    const filteredFNB = arrProducts?.filter((item: ProdukProps) => item.jenisBrg === "FoodNBeverage")
+    const filteredKEC = arrProducts?.filter((item: ProdukProps) => item.jenisBrg === "Kecantikan")
+    const filteredKES = arrProducts?.filter((item: ProdukProps) => item.jenisBrg === "Kesehatan")
+    const filteredRUM = arrProducts?.filter((item: ProdukProps) => item.jenisBrg === "RumahTangga")
 
     const isFNBEmpty  = !Array.isArray(filteredFNB) || filteredFNB.length < 1 || !filteredFNB
     const isKECEmpty  = !Array.isArray(filteredKEC) || filteredKEC.length < 1 || !filteredKEC

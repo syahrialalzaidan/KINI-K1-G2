@@ -6,7 +6,7 @@ interface AccountProps {
 export default function Account(props: AccountProps) {
   function getBgColor() {
     if (props.role == "warehouse") {
-      return "bg-[#F472B6]";
+      return "bg-pink-500";
     } else if (props.role == "admin") {
       return "bg-ungu";
     } else {

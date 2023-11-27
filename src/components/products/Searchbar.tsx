@@ -58,7 +58,7 @@ export default function Searchbar() {
 
     return (
         <form onSubmit={handleSearch}>
-            <div className="flex max-w-md mx-auto overflow-hidden rounded-lg sm:max-w-screen-lg">
+            <div className="xl:border border-slate-300 xl:opacity-40 mt-3 xl:ml-4 flex max-w-md mx-auto overflow-hidden rounded-lg sm:max-w-screen-lg">
                 <input 
                     className="w-[400px] sm:w-[550px] h-12 pl-3 search-manufactur__input"
                     placeholder="Cari barang..."

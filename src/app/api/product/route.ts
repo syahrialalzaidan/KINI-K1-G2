@@ -4,6 +4,20 @@ import { prisma } from "@/lib/prisma"
 export async function POST(request: Request) {
     try {
         const{ jenisBrg, namaBrg, hargaBrg, stok, penerima, image } = await request.json()
+
+        if (!jenisBrg || !namaBrg || !hargaBrg || !stok || !penerima || !image) {
+            return NextResponse.json({error: 'Data tidak lengkap!'}, { status: 400 })
+        }
+
+        const isProductExisted = await prisma.produk.findUnique({
+            where: {
+                namaBrg
+            }
+        })
+
+        if (isProductExisted) {
+            return NextResponse.json({ message: 'Produk sudah ada!' }, { status: 406 })
+        }
         
         const produk = await prisma.produk.create({
             data: {
@@ -15,9 +29,9 @@ export async function POST(request: Request) {
                 image
             }
         })
-        return NextResponse.json(produk, {status: 201})
+        return NextResponse.json(produk)
     } catch (error: any) {
-        return NextResponse.json(error, {status: 500})
+        return NextResponse.json(error)
     }
 }
 
