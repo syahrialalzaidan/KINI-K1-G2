@@ -43,7 +43,7 @@ export default async function Searchbar({searchText}:{ searchText : string }) {
             <button 
                 className="bg-pink-500 text-white hover:bg-pink-600 dark:hover:bg-pink-600 h-14 rounded-lg mb-2 mt-8 w-40"
             >
-                <Link className="text-center" href={`${user?.role == "warehouse"? "./warehouse/addItems" : "./catalogue/addItems" }`}>Tambah Produk</Link>
+                <Link className="text-center" href={`${user?.role == "WAREHOUSE"? "./warehouse/addItems" : "./catalogue/addItems" }`}>Tambah Produk</Link>
             </button>
             <Catalog results={results} />
         </div>
