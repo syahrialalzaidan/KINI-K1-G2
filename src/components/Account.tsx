@@ -5,9 +5,9 @@ interface AccountProps {
 
 export default function Account(props: AccountProps) {
   function getBgColor() {
-    if (props.role == "warehouse") {
+    if (props.role.toLowerCase() == "warehouse") {
       return "bg-pink-500";
-    } else if (props.role == "admin") {
+    } else if (props.role.toLowerCase() == "admin") {
       return "bg-ungu";
     } else {
       return "bg-[#6DADA9]";

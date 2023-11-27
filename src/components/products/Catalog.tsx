@@ -3,7 +3,7 @@ import { ProdukProps } from "@/types"
 
 export const getCatalog = async() => {
     try {
-        const res = await fetch("http://localhost:3000/api/product", {
+        const res = await fetch(process.env.NEXTAUTH_URL + "/api/product", {
             cache: "no-store",
         })
 

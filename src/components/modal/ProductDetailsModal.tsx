@@ -17,7 +17,7 @@ export default function ProductDetailsModal() {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/product/${id}`, {
+      await fetch(process.env.NEXT_PUBLIC_API_URL + `/api/product/${id}`, {
         method: "DELETE",
       });
       router.refresh();

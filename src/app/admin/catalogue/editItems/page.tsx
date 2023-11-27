@@ -16,7 +16,7 @@ import { Pencil } from 'lucide-react';
 import useProductDetailsModal from '@/hooks/useProductDetailsModal';
 import { useSession } from 'next-auth/react';
 
-export default function editBarangAdmin() {
+export default function EditBarangAdmin() {
     const detailProduk = useProductDetailsModal()
     const { data: session } = useSession()
 
@@ -42,7 +42,7 @@ export default function editBarangAdmin() {
             if (jenisBrg === "" || namaBrg === "" || stok === 0 || hargaBrg === 0 || penerima === "" || !image) {
                 throw new Error("Field tidak boleh kosong!")
             }
-            const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+            const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/api/product/${id}`, {
             method:"PATCH",
             headers: {  
               'Content-Type': 'application/json'
