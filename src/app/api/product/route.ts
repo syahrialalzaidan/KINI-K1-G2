@@ -25,13 +25,13 @@ export async function GET() {
     try {
         const produk = await prisma.produk.findMany({
             orderBy: {
-                jenisBrg: "asc",
+                jenisBrg: "asc"
             }
         })
-        console.log("error1")
+
         return NextResponse.json(produk, {status: 200})
     } catch (error: any) {
-        console.log("error2")
+
         return NextResponse.json(error, {status: 500})
     }
 }

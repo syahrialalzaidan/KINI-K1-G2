@@ -8,10 +8,8 @@ interface params {
 export async function PATCH(request: Request, { params }: { params: params}) {
     try {
         const data = await request.json()
-
         const{ id } = params
-
-
+        
         const produk = await prisma.produk.findUnique({
         where: {
                 id: id
