@@ -65,7 +65,7 @@ export default function ProdukCashier({ products }: ProductListProps) {
   ];
 
   const sortAndFilterProducts = (order: "asc" | "desc") => {
-    const filteredProducts = products.filter(
+    const filteredProducts = products?.filter(
       (product) =>
         product.namaBrg.toLowerCase().includes(searchQuery.toLowerCase()) &&
         (selectedCategory ? product.jenisBrg === selectedCategory : true)
