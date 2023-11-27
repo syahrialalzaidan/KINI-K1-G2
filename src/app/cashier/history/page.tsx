@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import History from "./History";
+import CashierHistoryContent from "./CashierHistoryContent";
 
-export default async function AdminHistory() {
+
+export default async function CashierHistory() {
 
   const transaction = await prisma.transaction.findMany({
     include: {
@@ -11,7 +12,7 @@ export default async function AdminHistory() {
 
   return (
     <div>
-      <History transaction = {transaction} />
+      <CashierHistoryContent transaction = {transaction} />
     </div>
   );
 }

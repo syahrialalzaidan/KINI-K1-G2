@@ -10,7 +10,7 @@ export default async function AdminHistory() {
   });
 
   return (
-    <div>
+    <div className="py-8 px-[5%]">
       <History transaction = {transaction} />
     </div>
   );

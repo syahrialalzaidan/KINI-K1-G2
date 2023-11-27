@@ -22,7 +22,7 @@ export default async function AdminPage() {
     return (
         <>
         <AddUserModal />
-        <div className="bg-[#FBF4FB] min-h-screen flex flex-col items-start">
+        <div className="bg-[#FBF4FB] min-h-screen px-0 flex flex-col items-start">
             <div className="mx-40">
                 <div className="my-7">
                     <p className="font-bold text-5xl">

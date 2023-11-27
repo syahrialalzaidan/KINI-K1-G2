@@ -1,7 +1,5 @@
 "use client";
 import Account from "@/components/Account";
-import Keranjang from "@/components/Keranjang";
-import { Transaction, TransactionItem } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -32,6 +30,10 @@ interface CartProduct extends Product {
   quantity: number;
 }
 
+interface CartListProps {
+  CartList: CartProduct[];
+}
+
 interface TransactionItemApi {
   name: string;
   qty: number;
@@ -45,7 +47,7 @@ interface TransactionApi {
   paymentmethod: string;
 }
 
-export default function ProdukCashier({ products }: ProductListProps) {
+export default function ProdukAdmin({ products }: ProductListProps) {
   // Push 26 November 2023 11.52
   const { data: session } = useSession();
   const [cart, setCart] = useState<CartProduct[]>([]);
@@ -54,7 +56,6 @@ export default function ProdukCashier({ products }: ProductListProps) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
 
   const sortOptions = ["A-Z", "Z-A"];
   const categoryOptions = [
@@ -84,7 +85,6 @@ export default function ProdukCashier({ products }: ProductListProps) {
 
   const sortedAndFilteredProducts = sortAndFilterProducts(sortOrder);
 
-
   useEffect(() => {
     setDataapi({
       pic: session?.user?.name ?? "",
@@ -98,11 +98,12 @@ export default function ProdukCashier({ products }: ProductListProps) {
           .map((item) => item.hargaBrg * item.quantity)
           .reduce((total, value) => total + value, 0) * 1.1
       ),
-      paymentmethod: paymentMethod,
+      paymentmethod: "QRIS",
     });
   }, [cart, dataapi, sortOrder, searchQuery]);
 
   const handleCheckout = async () => {
+    console.log("CHECKOUT", dataapi);
     if (dataapi?.items.length != 0) {
       const res = await fetch(
         process.env.NEXT_PUBLIC_API_URL + `/api/transaction`,
@@ -126,38 +127,19 @@ export default function ProdukCashier({ products }: ProductListProps) {
 
   return (
     <div className="px-[5%]">
-      <Account nama={session?.user?.name} role="Cashier" />
+      <Account nama={session?.user?.name} role="admin" />
 
-      <div id="cashierHeader" className="flex w-full justify-between items-center mt-6">
+      <div id="cashierHeader" className="flex">
         <div className="text-4xl font-bold mr-8 flex justify-center items-center">
-          Cashier
-        </div>
-
-        <div className="h-12">
-          {show ? (
-            <div>
-              <Keranjang
-                CartList={cart}
-                setCart={setCart}
-                setShow={setShow}
-                handleCheckout={handleCheckout}
-                setPaymentMethod={setPaymentMethod}
-              />
-            </div>
-          ) : (
-            <BiBasket
-              className="w-12 h-12 mr-8 ml-8 cursor-pointer"
-              onClick={() => setShow(true)}
-            />
-          )}
+          Product Catalogue
         </div>
       </div>
 
-      <div className="flex gap-4 mt-2 mb-6">
+      <div className="flex gap-4 mt-8 mb-10">
         {/* Search Bar */}
         <input
           type="text"
-          placeholder="Cari barang"
+          placeholder="Find product..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full h-12 px-3 py-2 rounded-lg border-2 border-slate-400 mt-2"
@@ -166,12 +148,12 @@ export default function ProdukCashier({ products }: ProductListProps) {
 
       <div className="flex justify-start flex-row gap-6">
         {/* Sorting dropdown */}
-        <div className="flex rounded-lg px-2 bg-[#BFE7E4]">
-          <FaSort className="ml-2 text-lg lg:text-2xl text-[#4A8C87] absolute self-center" />
+        <div className="flex rounded-lg px-2 bg-ungu-mid">
+          <FaSort className="ml-2 text-lg lg:text-2xl text-ungu absolute self-center" />
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
-            className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
+            className="bg-transparent focus:outline-none focus:border-none text-ungu flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
           >
             {sortOptions.map((option) => (
               <option key={option} value={option === "A-Z" ? "asc" : "desc"}>
@@ -182,12 +164,12 @@ export default function ProdukCashier({ products }: ProductListProps) {
         </div>
 
         {/* Category dropdown */}
-        <div className="flex rounded-lg px-2 bg-[#BFE7E4]">
-          <FaFilter className="ml-2 text-lg lg:text-xl text-[#4A8C87] absolute self-center" />
+        <div className="flex rounded-lg px-2 bg-ungu-mid">
+          <FaFilter className="ml-2 text-lg lg:text-xl text-ungu absolute self-center" />
           <select
             value={selectedCategory || ""}
             onChange={(e) => setSelectedCategory(e.target.value || null)}
-            className="bg-transparent focus:outline-none focus:border-none text-[#4A8C87] flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
+            className="bg-transparent focus:outline-none focus:border-none text-ungu flex w-32 lg:w-full py-3 px-7 lg:px-10 gap-2 rounded-lg"
           >
             <option value="">All Categories</option>
             {categoryOptions.map((category) => (

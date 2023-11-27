@@ -71,7 +71,7 @@ export default function AccountList({ users }: AccountListProps) {
                                     <Image
                                         src="/edit.svg"
                                         alt="Edit Profile"
-                                        className="mx-auto"
+                                        className="mx-auto cursor-pointer"
                                         width={20}
                                         height={20}
                                         onClick={() => editModal.onOpen({
