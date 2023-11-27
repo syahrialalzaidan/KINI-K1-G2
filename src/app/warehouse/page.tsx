@@ -1,4 +1,6 @@
 import Account from "@/components/Account";
+import CustomFilter from "@/components/CustomFilter";
+import Searchbar from "@/components/Searchbar";
 import Catalog from "@/components/Catalog";
 import CustomFilter from "@/components/CustomFilter";
 import Searchbar from "@/components/Searchbar";

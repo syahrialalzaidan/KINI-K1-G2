@@ -63,3 +63,22 @@ enum JenisBarang {
   Kecantikan
   Kesehatan
 }
+
+model Produk {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  jenisBrg      JenisBarang  
+  namaBrg       String
+  hargaBrg      String
+  noInvoice     String        @unique
+  tglTerima     DateTime      @default(now())
+  tglUpdate     DateTime      @updatedAt
+  penerima      String
+  image         String
+}
+
+enum JenisBarang {
+  FoodNBeverage
+  RumahTangga
+  Kecantikan
+  Kesehatan
+}
