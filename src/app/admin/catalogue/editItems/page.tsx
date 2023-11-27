@@ -1,104 +1,118 @@
-"use client"
+"use client";
 
-import Account from '@/components/Account'
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState, Fragment, ChangeEvent } from 'react';
+import Account from "@/components/Account";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState, Fragment, ChangeEvent } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
-import { items } from '@/types';
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import toast from 'react-hot-toast';
-import { NextResponse } from 'next/server';
-import { UploadButton } from '@/app/utils/uploadthing';
-import { Pencil } from 'lucide-react';
-import useProductDetailsModal from '@/hooks/useProductDetailsModal';
-import { useSession } from 'next-auth/react';
+import { items } from "@/types";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import toast from "react-hot-toast";
+import { NextResponse } from "next/server";
+import { UploadButton, UploadDropzone } from "@/app/utils/uploadthing";
+import { Pencil } from "lucide-react";
+import useProductDetailsModal from "@/hooks/useProductDetailsModal";
+import { useSession } from "next-auth/react";
 
-export default function EditBarangAdmin() {
-    const detailProduk = useProductDetailsModal()
-    const { data: session } = useSession()
+export default function EditBarang() {
+  const detailProduk = useProductDetailsModal();
+  const { data: session } = useSession();
 
-    const router = useRouter()
+  const router = useRouter();
 
-    const [jenisBrg, setJenisBrg] = useState(detailProduk.data.jenisBrg)
-    const [namaBrg, setNamaBrg] = useState(detailProduk.data.namaBrg)
-    
-    const [hargaBrg, setHargaBrg] = useState(detailProduk.data.hargaBrg);
-    
-    const [stok, setStok] = useState(detailProduk.data.stok);
-  
-    const [penerima, setPenerima] = useState(detailProduk.data.penerima)
-    const [image, setImage] = useState<string | undefined>(detailProduk.data.image)
-    
-    const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) => setHargaBrg(+e.target.value);
-    
-    const handleChangeStok = (e: ChangeEvent<HTMLInputElement>) => setStok(+e.target.value);
+  const [jenisBrg, setJenisBrg] = useState(detailProduk.data.jenisBrg);
+  const [namaBrg, setNamaBrg] = useState(detailProduk.data.namaBrg);
 
-    const handleUpdate = async(id: string) => {
-        try {
-            console.log(jenisBrg,namaBrg, stok, hargaBrg, penerima, image)
-            if (jenisBrg === "" || namaBrg === "" || stok === 0 || hargaBrg === 0 || penerima === "" || !image) {
-                throw new Error("Field tidak boleh kosong!")
-            }
-            const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/api/product/${id}`, {
-            method:"PATCH",
-            headers: {  
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              jenisBrg,
-              namaBrg,
-              hargaBrg,
-              stok,
-              penerima,
-              image
-            })
-          })
-    
-          if (res.ok) {
-            router.refresh()
-            toast.success("Produk berhasil diperbarui!")
-            router.push("/admin/catalogue?q=")
-            
-          }
-    
-          if (res.status === 406) {
-            throw new Error("Nama produk sudah ada!")
-          }
-    
-        } catch (error: any) {
-          toast.error(error.message)
-          return NextResponse.json(error)
+  const [hargaBrg, setHargaBrg] = useState(detailProduk.data.hargaBrg);
+
+  const [stok, setStok] = useState(detailProduk.data.stok);
+
+  const [penerima, setPenerima] = useState(detailProduk.data.penerima);
+  const [image, setImage] = useState<string | undefined>(
+    detailProduk.data.image
+  );
+
+  const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) =>
+    setHargaBrg(+e.target.value);
+
+  const handleChangeStok = (e: ChangeEvent<HTMLInputElement>) =>
+    setStok(+e.target.value);
+
+  const handleUpdate = async (id: string) => {
+    try {
+      console.log(jenisBrg, namaBrg, stok, hargaBrg, penerima, image);
+      if (
+        jenisBrg === "" ||
+        namaBrg === "" ||
+        stok === 0 ||
+        hargaBrg === 0 ||
+        penerima === "" ||
+        !image
+      ) {
+        throw new Error("Field tidak boleh kosong!");
+      }
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + `/api/product/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            jenisBrg,
+            namaBrg,
+            hargaBrg,
+            stok,
+            penerima,
+            image,
+          }),
         }
+      );
+
+      if (res.ok) {
+        router.refresh();
+        toast.success("Produk berhasil diperbarui!");
+        router.push("./?q=");
       }
 
+      if (res.status === 406) {
+        throw new Error("Nama produk sudah ada!");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+      return NextResponse.json(error);
+    }
+  };
+
   return (
-    <div className="font-noto max-w-md flex flex-col pb-14 mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
+    <div className="font-noto flex flex-col pb-14 mx-auto sm:max-w-screen-lg overflow-x-hidden pt-4">
       <div className="flex justify-between items-start">
-        <div className='flex gap-4 mt-6 sm:-ml-10'>
-          <button className='' onClick={() => router.push("/admin/catalogue?q=")}>
+        <div className="flex gap-4 mt-6 sm:-ml-10">
+          <button
+            className=""
+            onClick={() => router.push("/admin/catalogue?q=")}
+          >
             <IoIosArrowBack color="#DB2777" size={26} />
           </button>
-          <p className='text-lg font-semibold text-[#DB2777]'>Catalog</p>
+          <p className="text-lg font-semibold text-[#DB2777]">Catalog</p>
         </div>
-        <Account 
-            nama={session?.user.name}
-            role="Admin"
-        />
-      </div>
-      
-      <div className="mt-12">
-          <h1 className="text-4xl font-bold">Edit Product</h1>
-          <h2 className='mt-4 -mb-4 text-md text-slate-500'>Catalog/Edit Product</h2>
+        <Account nama={session?.user?.name} role="admin" />
       </div>
 
-      <div className='bg-white w-full shadow-md mt-16 h-max rounded-xl'>
+      <div className="mt-12">
+        <h1 className="text-4xl font-bold">Edit Product</h1>
+        <h2 className="mt-4 -mb-4 text-md text-slate-500">
+          Catalog/Edit Product
+        </h2>
+      </div>
+
+      <div className="bg-white w-full shadow-md mt-16 h-max rounded-xl">
         <div className="p-7 text-left transistion-all flex flex-col gap-5">
-          <div className='flex flex-col gap-5 lg:flex-row sm:justify-between'>
-            <div className='relative'>
-              <label className='font-light opacity-30 text-sm ml-1'>
+          <div className="flex flex-col gap-5 lg:flex-row sm:justify-between">
+            <div className="relative">
+              <label className="font-light opacity-30 text-sm ml-1">
                 Jenis Barang
               </label>
               <div className="w-full rounded-lg mt-2 z-10">
@@ -125,7 +139,9 @@ export default function EditBarangAdmin() {
                             key={itemIdx}
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active ? 'bg-pink-100 text-pink-900' : 'text-gray-900'
+                                active
+                                  ? "bg-pink-100 text-pink-900"
+                                  : "text-gray-900"
                               }`
                             }
                             value={item}
@@ -134,14 +150,17 @@ export default function EditBarangAdmin() {
                               <>
                                 <span
                                   className={`block truncate ${
-                                    selected ? 'font-medium' : 'font-normal'
+                                    selected ? "font-medium" : "font-normal"
                                   }`}
                                 >
                                   {item}
                                 </span>
                                 {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   </span>
                                 ) : null}
                               </>
@@ -155,12 +174,12 @@ export default function EditBarangAdmin() {
               </div>
             </div>
             <div>
-              <label className='font-light opacity-30 text-sm ml-1'>
-                  Nama Barang
+              <label className="font-light opacity-30 text-sm ml-1">
+                Nama Barang
               </label>
-              <input 
+              <input
                 type="text"
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-56'
+                className="w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-56"
                 placeholder={detailProduk.data.namaBrg}
                 onChange={(e) => setNamaBrg(e.target.value)}
                 value={namaBrg}
@@ -168,78 +187,78 @@ export default function EditBarangAdmin() {
             </div>
           </div>
 
-          <div className='flex flex-col gap-5 lg:flex-row sm:justify-between'>
+          <div className="flex flex-col gap-5 lg:flex-row sm:justify-between">
             <div>
-              <label className='font-light opacity-30 text-sm ml-1'>
+              <label className="font-light opacity-30 text-sm ml-1">
                 Harga Barang
               </label>
-              <input 
+              <input
                 type="number"
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-44'
-                placeholder='Masukkan harga barang'
+                className="w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-44"
+                placeholder="Masukkan harga barang"
                 value={hargaBrg}
                 onChange={handleChangeHarga}
               />
             </div>
             <div>
-              <label className='font-light opacity-30 text-sm ml-1'>
+              <label className="font-light opacity-30 text-sm ml-1">
                 Stok Barang
               </label>
-              <input 
+              <input
                 type="number"
                 value={stok}
-                className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-64'
-                placeholder='Masukkan jumlah barang'
+                className="w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-64"
+                placeholder="Masukkan jumlah barang"
                 onChange={handleChangeStok}
               />
             </div>
           </div>
 
           <div>
-            <label className='font-light opacity-30 text-sm ml-1'>
-                Diterima Oleh
+            <label className="font-light opacity-30 text-sm ml-1">
+              Diterima Oleh
             </label>
-            <input 
+            <input
               type="text"
-              className='w-full border border-slate-300 rounded-lg p-2 mt-2'
+              className="w-full border border-slate-300 rounded-lg p-2 mt-2"
               placeholder={detailProduk.data.penerima}
               onChange={(e) => setPenerima(e.target.value)}
               value={penerima}
             />
           </div>
 
-          <div className='relative'>
+          <div className="relative">
             <div>
-              <label className='font-light opacity-30 text-sm ml-1'>
-                  Foto Barang
+              <label className="font-light opacity-30 text-sm ml-1">
+                Foto Barang
               </label>
-              <div className='w-full h-80 border border-slate-300 rounded-lg p-2 mt-2'>
+              <div className="w-full h-80 border border-slate-300 rounded-lg p-2 mt-2">
                 {image ? (
-                <Image
-                  src={image}
-                  alt="Product image"
-                  width={1000}
-                  height={667}
-                  className="w-full h-64 object-contain"
-                />
-              ) : (
-                <UploadButton
-                  endpoint="productImage"
-                  onClientUploadComplete={(res) => {
-                    setImage(res?.[0].url);
-                    // Do something with the response
-                    console.log("Files: ", res);
-                    toast.success("Upload Completed");
-                  }}
-                  onUploadError={(error) => {
-                    // Do something with the error.
-                    console.log(`ERROR! ${error.message}`);
-                    toast.error("Cannot upload the image!")
-                  }}
-                  className='lg:-mr-40 mt-28 ml-72 lg:ml-40 sm:ml-80'
-                />
-              )}
-              </div> 
+                  <Image
+                    src={image}
+                    alt="Product image"
+                    width={1000}
+                    height={667}
+                    className="w-full h-64 object-contain"
+                  />
+                ) : (
+                  <UploadDropzone
+                    endpoint="productImage"
+                    onClientUploadComplete={(res) => {
+                      setImage(res?.[0].url);
+                      // Do something with the response
+                      console.log("Files: ", res);
+                      toast.success("Upload Completed");
+                    }}
+                    onUploadError={(error) => {
+                      // Do something with the error.
+                      console.log(`ERROR! ${error.message}`);
+                      toast.error("Cannot upload the image!");
+                    }}
+                    className="mt-14 ml-72 sm:ml-1"
+                  />
+                )}
+              </div>
               {image && (
                 <button
                   onClick={() => setImage("")}
@@ -255,16 +274,22 @@ export default function EditBarangAdmin() {
         </div>
       </div>
 
-      <div className='bg-white w-full shadow-md mt-8 h-max rounded-xl'>
-        <div className='p-5 text-left transistion-all flex gap-5 font-light'>
-          <button onClick={() => handleUpdate(detailProduk.data.id)} className='bg-pink-500 hover:bg-pink-600 py-1.5 px-8 rounded-lg text-white'>
+      <div className="bg-white w-full shadow-md mt-8 h-max rounded-xl">
+        <div className="p-5 text-left transistion-all flex gap-5 font-light">
+          <button
+            onClick={() => handleUpdate(detailProduk.data.id)}
+            className="bg-pink-500 hover:bg-pink-600 py-1.5 px-8 rounded-lg text-white"
+          >
             SAVE
           </button>
-          <button onClick={() => router.push("/admin/catalogue?q=")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
+          <button
+            onClick={() => router.push("/admin/catalgue?q=")}
+            className="border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400"
+          >
             CANCEL
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -20,8 +20,8 @@ interface TransactionItemApi {
 
 // make a post API call to create a transaction
 export async function POST(req: NextRequest) {
-  const transactionToPost  = await req.json();
-  console.log("transactionToPost", transactionToPost)
+  const transactionToPost = await req.json();
+  console.log("transactionToPost", transactionToPost);
 
   const { pic, items, total, paymentmethod } = transactionToPost;
 
@@ -30,13 +30,13 @@ export async function POST(req: NextRequest) {
     price: item.price,
     qty: item.qty,
   }));
-  console.log("mappedItems", mappedItems)
+  console.log("mappedItems", mappedItems);
 
   // create a transaction using Prisma
   try {
     const transaction = await prisma.transaction.create({
       data: {
-        pic : pic,
+        pic: pic,
         total: total,
         items: {
           create: mappedItems,
@@ -44,6 +44,22 @@ export async function POST(req: NextRequest) {
         paymentmethod: paymentmethod,
       },
     });
+
+    const updateproduk = mappedItems.map(async (item: TransactionItemApi) => {
+      const produk = await prisma.produk.update({
+        where: {
+          namaBrg: item.name,
+        },
+        data: {
+          stok: {
+            decrement: item.qty,
+          },
+        },
+      });
+    });
+
+    const updateproduk2 = await Promise.all(updateproduk);
+
     return NextResponse.json(
       { message: "Transaction successfully created" },
       { status: 200 }

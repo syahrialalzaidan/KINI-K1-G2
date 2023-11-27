@@ -20,7 +20,6 @@ export default async function CatalogueAdminPage({ searchParams }: any) {
 
             <div className="mt-12">
                 <h1 className="text-4xl font-bold">Catalog</h1>
-                <h2 className='mt-4 -mb-4 text-md text-slate-500'>Catalog</h2>
             </div>
             <Search searchText={searchText} />
         </div>

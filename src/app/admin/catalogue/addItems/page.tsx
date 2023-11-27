@@ -3,7 +3,7 @@
 import Account from '@/components/Account'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, ChangeEvent } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 
 import { items } from '@/types';
@@ -11,33 +11,34 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import toast from 'react-hot-toast';
 import { NextResponse } from 'next/server';
-import { UploadButton } from '@/app/utils/uploadthing';
+import { UploadButton, UploadDropzone } from '@/app/utils/uploadthing';
 import { Pencil } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
 export default function AddBarangAdmin() {
   const router = useRouter()
-  const {data: session} = useSession()
+  const { data: session } = useSession()
 
   const [jenisBrg, setJenisBrg] = useState(items[0])
   const [namaBrg, setNamaBrg] = useState("")
-
-  const [stokTemp, setStokTemp] = useState("")
-  const stok = parseInt(stokTemp)
-
-  const [hargaTemp, setHargaTemp] = useState("")
-  const harga = parseInt(hargaTemp)
+  
+  const [hargaBrg, setHargaBrg] = useState<string | number>('');
+  
+  const [stok, setStok] = useState<string | number>('');
 
   const [penerima, setPenerima] = useState("")
   const [image, setImage] = useState<string | undefined>("")
+  
+  const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) => setHargaBrg(+e.target.value);
+  
+  const handleChangeStok = (e: ChangeEvent<HTMLInputElement>) => setStok(+e.target.value);
 
   const handleSubmit = async() => {
     try {
-      console.log(jenisBrg, namaBrg, stok, harga, penerima, image)
-      if (!namaBrg || !stok || !harga || !penerima || !image) {
+      if (!jenisBrg || !namaBrg || stok === 0 || hargaBrg === 0 || !penerima || !image) {
         toast.error("Isi data dengan lengkap!")
       }
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/product", {
+      const res = await fetch("http://localhost:3000/api/product", {
         method:"POST",
         headers: {  
           'Content-Type': 'application/json'
@@ -45,7 +46,7 @@ export default function AddBarangAdmin() {
         body: JSON.stringify({
           jenisBrg,
           namaBrg,
-          hargaBrg: harga,
+          hargaBrg,
           stok,
           penerima,
           image
@@ -55,24 +56,26 @@ export default function AddBarangAdmin() {
       if (res.ok) {
         router.refresh()
         toast.success("Produk berhasil dibuat!")
-        router.push("/admin/catalogue?q=")
+        router.push("/warehouse?q=")
+        router.refresh()
       }
+
       if (res.status === 406) {
         throw new Error("Nama produk sudah ada!")
       }
 
     } catch (error: any) {
-      console.log("error ya")
+
       toast.error(error.message)
       return NextResponse.json(error)
     }
   }
 
   return (
-    <div className="font-noto max-w-md flex flex-col pb-14 mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
+    <div className="font-noto max-w-md flex flex-col pb-14 overflow-x-hidden mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
       <div className="flex justify-between items-start">
         <div className='flex gap-4 mt-6 sm:-ml-10'>
-          <button className='' onClick={() => router.push("/admin/catalogue?q=")}>
+          <button className='' onClick={() => router.push("./?q=")}>
             <IoIosArrowBack color="#DB2777" size={26} />
           </button>
           <p className='text-lg font-semibold text-[#DB2777]'>Catalog</p>
@@ -98,7 +101,7 @@ export default function AddBarangAdmin() {
               <div className="w-full rounded-lg mt-2">
                 <Listbox value={jenisBrg} onChange={setJenisBrg}>
                   <div className="relative mt-1">
-                    <Listbox.Button className="border border-slate-300 relative w-full cursor-default rounded-lg py-2.5 pl-3 pr-80 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <Listbox.Button className="border border-slate-300 relative w-full cursor-default rounded-lg py-2.5 pl-3 mr-80 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                       <span className="block truncate">{jenisBrg}</span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <ChevronUpDownIcon
@@ -113,13 +116,13 @@ export default function AddBarangAdmin() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                      <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                         {items.map((item, itemIdx) => (
                           <Listbox.Option
                             key={itemIdx}
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
+                                active ? 'bg-pink-100 text-pink-900' : 'text-gray-900'
                               }`
                             }
                             value={item}
@@ -134,7 +137,7 @@ export default function AddBarangAdmin() {
                                   {item}
                                 </span>
                                 {selected ? (
-                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
                                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                   </span>
                                 ) : null}
@@ -164,24 +167,26 @@ export default function AddBarangAdmin() {
           <div className='flex flex-col gap-5 lg:flex-row sm:justify-between'>
             <div>
               <label className='font-light opacity-30 text-sm ml-1'>
-                  Harga Barang
+                Harga Barang
               </label>
               <input 
-                type="text"
+                type="number"
+                value={hargaBrg === 0 ? '' : hargaBrg}
                 className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-44'
                 placeholder='Masukkan harga barang'
-                onChange={(e) => setHargaTemp(e.target.value)}
+                onChange={handleChangeHarga}
               />
             </div>
             <div>
               <label className='font-light opacity-30 text-sm ml-1'>
-                  Stok Barang
+                Stok Barang
               </label>
               <input 
-                type="text"
+                type="number"
+                value={stok === 0 ? '' : stok}
                 className='w-full border border-slate-300 rounded-lg p-2 mt-2 lg:mr-64'
                 placeholder='Masukkan jumlah barang'
-                onChange={(e) => setStokTemp(e.target.value)}
+                onChange={handleChangeStok}
               />
             </div>
           </div>
@@ -213,10 +218,9 @@ export default function AddBarangAdmin() {
                   className="w-full h-64 object-contain"
                 />
               ) : (
-                <UploadButton
+                <UploadDropzone
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
-                    toast.loading("Uploading image...");
                     setImage(res?.[0].url);
                     // Do something with the response
                     console.log("Files: ", res);
@@ -227,7 +231,7 @@ export default function AddBarangAdmin() {
                     console.log(`ERROR! ${error.message}`);
                     toast.error("Cannot upload the image!")
                   }}
-                  className='lg:-mr-40 mt-28 ml-72 lg:ml-40 sm:ml-80'
+                  className='mt-14 ml-72 sm:ml-1'
                 />
               )}
               </div> 

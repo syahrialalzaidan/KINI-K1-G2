@@ -27,6 +27,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions)
   return (
     <html lang="en">
+      <link rel="icon" href="/logo.svg" />
       <body className={notoSans.className}>
         <Provider session={session}>
           <ToasterContext />

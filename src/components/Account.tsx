@@ -16,9 +16,7 @@ export default function Account(props: AccountProps) {
 
   return (
     <div className="flex items-center gap-4 justify-end">
-      <div className={`${getBgColor()} w-48 flex gap-4 rounded-lg p-4`}>
-        <div className="w-10 h-10 rounded-full bg-gray-300 border-[#F472B6]/30"></div>
-
+      <div className={`${getBgColor()} w-44 flex gap-4 rounded-lg p-4`}>
         <div>
           <p className="text-white">
             Hi, <span className="font-bold">{props.nama}!</span>

@@ -1,15 +1,18 @@
 import Account from "@/components/Account";
 import Search from "@/components/products/Search";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-export default function WarehousePage({ searchParams }: any) {
+export default async function WarehousePage({ searchParams }: any) {
     const searchText = searchParams.q
+    const session = await getServerSession(authOptions)
+    const user = session?.user
 
     return (
         <div className="font-noto max-w-md mx-auto overflow-hidden sm:max-w-screen-lg sm:ml-6 pt-4">
             <div className="">
                 <Account 
-                    nama="Iyal"
+                    nama={user?.name}
                     role="Warehouse"
                 />
             </div>
