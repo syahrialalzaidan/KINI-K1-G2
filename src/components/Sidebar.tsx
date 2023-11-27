@@ -47,8 +47,8 @@ export default function Sidebar(props: SidebarProps) {
   
 
   return (
-    <div>
-      <div className="px-[5%] py-8 fixed top-0 left-0 z-50">
+    <div className="">
+      <div className={`px-[5%] ${open? "bg-white" : "bg-transparent"} w-64 py-8 fixed top-0 left-0 z-50`}>
         <MenuIcon isOpen={open} handleToggle={() => setOpen((prev) => !prev)} />
       </div>
 
@@ -85,13 +85,11 @@ export default function Sidebar(props: SidebarProps) {
                 {props.role == "cashier" ? "Belanja" : "Gudang"}
               </label>
               <a
-                href={props.role == "cashier"? `/${props.role}` : `/${props.role}/catalogue` } 
+                href={props.role == "admin"? `/${props.role}/catalogue?q=` : `/${props.role}` } 
                 className={`px-8 ${
-                  pathName === `/${props.role}/catalogue` ? "border-l-4" : ""
+                  pathName.includes("catalogue") ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
-                  pathName === `/${props.role}/catalogue` ||
-                  pathName == "/cashier" ||
-                  props.role == "warehouse"
+                  pathName.includes("catalogue")
                     ? primaryColor()
                     : ""
                 }  group ${

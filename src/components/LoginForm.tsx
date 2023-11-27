@@ -23,7 +23,7 @@ export default function LoginForm() {
                 router.push('/cashier')
             }
             if (session.user.role === 'WAREHOUSE') {
-                router.push('/warehouse')
+                router.push('/warehouse?q=')
             }
         }
     }, [status])

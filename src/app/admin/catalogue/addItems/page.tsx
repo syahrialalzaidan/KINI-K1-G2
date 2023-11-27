@@ -13,9 +13,11 @@ import toast from 'react-hot-toast';
 import { NextResponse } from 'next/server';
 import { UploadButton } from '@/app/utils/uploadthing';
 import { Pencil } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
-export default function AddBarang() {
+export default function AddBarangAdmin() {
   const router = useRouter()
+  const {data: session} = useSession()
 
   const [jenisBrg, setJenisBrg] = useState(items[0])
   const [namaBrg, setNamaBrg] = useState("")
@@ -53,7 +55,7 @@ export default function AddBarang() {
       if (res.ok) {
         router.refresh()
         toast.success("Produk berhasil dibuat!")
-        router.push("/warehouse?q=")
+        router.push("/admin/catalogue?q=")
       }
       if (res.status === 406) {
         throw new Error("Nama produk sudah ada!")
@@ -70,14 +72,14 @@ export default function AddBarang() {
     <div className="font-noto max-w-md flex flex-col pb-14 mx-auto sm:max-w-screen-lg sm:ml-6 pt-4">
       <div className="flex justify-between items-start">
         <div className='flex gap-4 mt-6 sm:-ml-10'>
-          <button className='' onClick={() => router.push("/warehouse?q=")}>
+          <button className='' onClick={() => router.push("/admin/catalogue?q=")}>
             <IoIosArrowBack color="#DB2777" size={26} />
           </button>
           <p className='text-lg font-semibold text-[#DB2777]'>Catalog</p>
         </div>
         <Account 
-            nama="Iyal"
-            role="warehouse"
+            nama={session?.user?.name}
+            role="admin"
         />
       </div>
       
@@ -217,7 +219,7 @@ export default function AddBarang() {
                     toast.loading("Uploading image...");
                     setImage(res[0].url);
                     // Do something with the response
-                    toast.dismiss();
+                    console.log("Files: ", res);
                     toast.success("Upload Completed");
                   }}
                   onUploadError={(error) => {
@@ -249,7 +251,7 @@ export default function AddBarang() {
           <button onClick={handleSubmit} className='bg-pink-500 hover:bg-pink-600 py-1.5 px-8 rounded-lg text-white'>
             SAVE
           </button>
-          <button onClick={() => router.push("/warehouse?q=")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
+          <button onClick={() => router.push("/admin/catalogue?q=")} className='border hover:bg-slate-200 py-1.5 px-6 rounded-lg text-gray-400'>
             CANCEL
           </button>
         </div>

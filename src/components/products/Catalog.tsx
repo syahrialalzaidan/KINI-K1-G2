@@ -17,8 +17,8 @@ export const getCatalog = async() => {
     }
 }
 
-export default async function Catalog() {
-    const products = await getCatalog()
+export default function Catalog({results}: {results: ProdukProps[]}) {
+    const products = results
     const isDataEmpty  = !Array.isArray(products) || products.length < 1 || !products
 
     const arrProducts: ProdukProps[] = products
@@ -48,9 +48,9 @@ export default async function Catalog() {
                                 ))}
                             </div>
                         ): (
-                            <div className="text-center pt-6 sm:pt-16">
-                                <h2 className="text-xl font-bold">Empty products</h2>
-                                <p>Please add new product</p>
+                            <div className="text-center pt-6 mb-20 sm:pt-16">
+                                <h2 className="text-md font-semibold">Empty products</h2>
+                                <p className="text-sm">Please find another product</p>
                             </div>
                         )}
                     </div>
@@ -65,9 +65,9 @@ export default async function Catalog() {
                                 ))}
                             </div>
                         ): (
-                            <div className="text-center pt-6 sm:pt-16">
-                                <h2 className="text-xl font-bold">Empty products</h2>
-                                <p>Please add new product</p>
+                            <div className="text-center pt-6 mb-20 sm:pt-20">
+                                <h2 className="text-md font-semibold">Empty products</h2>
+                                <p className="text-sm">Please find another product</p>
                             </div>
                         )}
                     </div>
@@ -82,9 +82,9 @@ export default async function Catalog() {
                                 ))}
                             </div>
                         ): (
-                            <div className="text-center pt-6 sm:pt-16">
-                                <h2 className="text-xl font-bold">Empty products</h2>
-                                <p>Please add new product</p>
+                            <div className="text-center pt-6 mb-20 sm:pt-16">
+                                <h2 className="text-md font-semibold">Empty products</h2>
+                                <p className="text-sm">Please find another product</p>
                             </div>
                         )}
                     </div>
@@ -99,17 +99,17 @@ export default async function Catalog() {
                                 ))}
                             </div>
                         ): (
-                            <div className="text-center pt-6 sm:pt-16">
-                                <h2 className="text-xl font-bold">Empty products</h2>
-                                <p>Please add new product</p>
+                            <div className="text-center pt-6 mb-20 sm:pt-16">
+                                <h2 className="text-md font-semibold">Empty products</h2>
+                                <p className="text-sm">Please find another product</p>
                             </div>
                         )}
                     </div>
                 </section>
             ): (
-                <div className="text-center pt-6 sm:pt-16">
+                <div className="text-center pt-6 mt-4 h-80 sm:pt-16">
                     <h2 className="text-xl font-bold">Oops, no results</h2>
-                    <p>Please add new product</p>
+                    <p>Please add new or find another product</p>
                 </div>
             )}
         </div>

@@ -49,7 +49,7 @@ export async function PATCH(request: Request, { params }: { params: Params}) {
     }
 }
 
-export async function GET(request: Request, { params }: { params: params}) {
+export async function GET(request: Request, { params }: { params: Params}) {
     try {
         
 
