@@ -89,7 +89,7 @@ export default function Sidebar(props: SidebarProps) {
                 className={`px-8 ${
                   pathName.includes("catalogue") ? "border-l-4" : ""
                 } flex items-center gap-3 p-4 text-[#4C4E64]/[0.87] rounded-lg ${
-                  pathName.includes("catalogue") || pathName === "/cashier" || pathName === "/warehouse"
+                  pathName.includes("catalogue") || pathName === "/cashier" || pathName.substring(0,10) === "/warehouse"
                     ? primaryColor()
                     : ""
                 }  group ${

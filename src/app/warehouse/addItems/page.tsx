@@ -54,6 +54,7 @@ export default function AddBarang() {
         router.refresh()
         toast.success("Produk berhasil dibuat!")
         router.push("/warehouse?q=")
+        router.refresh()
       }
       if (res.status === 406) {
         throw new Error("Nama produk sudah ada!")
