@@ -8,7 +8,7 @@ export default function WarehouseLayout({
   return (
     <>
       <Sidebar role="warehouse" />
-      <div className="lg:pl-80 px-[5%] py-24 lg:py-4">{children}</div>
+      <div className="lg:pl-80 bg-secondary0_5 px-[5%] py-24 lg:py-4">{children}</div>
     </>
   );
 }

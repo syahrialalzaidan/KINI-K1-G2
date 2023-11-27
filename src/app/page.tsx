@@ -16,7 +16,7 @@ export default async function LoginPage() {
       redirect('/cashier')
     }
     if (user?.role  === 'WAREHOUSE') {
-      redirect('/warehouse')
+      redirect('/warehouse?q=')
     }
     
     return (

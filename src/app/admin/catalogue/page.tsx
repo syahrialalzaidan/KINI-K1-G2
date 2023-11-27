@@ -1,31 +1,28 @@
-import ProdukAdmin from "./ProdukAdmin";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Account from "@/components/Account";
+import Search from "@/components/products/Search";
+import { getServerSession } from "next-auth";
 
-const getCatalog = async () => {
-  try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + `/api/product`,
-      {
-        cache: "no-store",
-      }
-    );
+export default async function CatalogueAdminPage({ searchParams }: any) {
+    const searchText = searchParams.q
+    
+    const session = await getServerSession(authOptions)
+    const user = session?.user
 
-    if (!res.ok) {
-      throw new Error("Faile to fetch the catalog");
-    }
+    return (
+        <div className="font-noto max-w-md mx-auto overflow-hidden sm:max-w-screen-lg sm:ml-6 pt-4">
+            <div className="">
+                <Account 
+                    nama={user?.name}
+                    role="admin"
+                />
+            </div>
 
-    return res.json();
-  } catch (error) {
-    console.log("Error loading catalog: ", error);
-  }
-};
-
-export default async function CashierPage() {
-    const produk_get = await getCatalog()
-    // Push 26 November 2023 11.52
-
-  return (
-    <div className="py-8 px-[5%]">
-      <ProdukAdmin products={produk_get} />
-    </div>
-  );
+            <div className="mt-12">
+                <h1 className="text-4xl font-bold">Catalog</h1>
+                <h2 className='mt-4 -mb-4 text-md text-slate-500'>Catalog</h2>
+            </div>
+            <Search searchText={searchText} />
+        </div>
+    )
 }
