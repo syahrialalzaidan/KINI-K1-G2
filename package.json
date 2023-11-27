@@ -17,6 +17,8 @@
     "axios": "^1.6.1",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
+    "mongoose": "^8.0.1",
+    "class-variance-authority": "^0.7.0",
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
     "mongoose": "^8.0.1",
@@ -28,6 +30,9 @@
     "react-icons": "^4.11.0",
     "react-simple-typewriter": "^5.0.1",
     "recharts": "^2.9.3",
+    "tailwind-merge": "^2.0.0",
+    "react-native-toast-message": "^2.1.7",
+    "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",
     "zustand": "^4.4.6"
   },

@@ -1,20 +1,17 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-interface params {
+interface Params {
     id?: string
 }
 
-export async function PATCH(request: Request, { params }: { params: params}) {
+export async function PATCH(request: Request, { params }: { params: Params}) {
     try {
         const data = await request.json()
-
-        const{ id } = params
-
-
+        
         const produk = await prisma.produk.findUnique({
         where: {
-                id: id
+                id: params.id
             }
         })
 
@@ -39,7 +36,7 @@ export async function PATCH(request: Request, { params }: { params: params}) {
 
         const updatedProduk = await prisma.produk.update({
             where: {
-                id: id
+                id: params.id
             }, 
             data: {
                 ...data
@@ -54,15 +51,41 @@ export async function PATCH(request: Request, { params }: { params: params}) {
 
 export async function GET(request: Request, { params }: { params: params}) {
     try {
-        const{ id } = params
+        
 
-        const getProduk = await prisma.produk.findMany({
+        const getProduk = await prisma.produk.findUnique({
             where: {
-                id: id
+                id: params.id
             }
         })
 
         return NextResponse.json(getProduk, {status: 200})
+    } catch (error: any) {
+        console.log("PARAMS : ", params)
+        return NextResponse.json(error, {status: 500})
+    }
+}
+
+export async function DELETE(request: Request, { params }: { params: Params}) {
+    try {
+
+        const produk = await prisma.produk.findUnique({
+            where: {
+                id: params.id
+            }
+        })
+
+        if (!produk) {
+            return new NextResponse("Invalid ID", { status: 400 })
+        }
+
+        const deletedProduk = await prisma.produk.delete({
+            where: {
+                id: params.id
+            }
+        })
+
+        return NextResponse.json(deletedProduk, {status: 200})
     } catch (error: any) {
         return NextResponse.json(error, {status: 500})
     }

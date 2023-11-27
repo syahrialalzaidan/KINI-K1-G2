@@ -19,7 +19,7 @@ export default function CustomFilter(props: filterProps) {
 
   return (
     <div>
-      <button className="bg-[#FFD4E6] h-10 w-28 rounded-lg pl-2 flex items-center justify-around">
+      <button className="xl:border bg-white border-slate-300 text-black opacity-80 xl:opacity-30 h-10 w-28 rounded-lg pl-2 flex items-center justify-around">
         {getLogo()}
         {props.title}
         <RiArrowDropDownLine size={30} />
