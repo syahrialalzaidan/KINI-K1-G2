@@ -25,7 +25,7 @@ export default function AddBarang() {
   const [stok, setStok] = useState<string | number>('');
 
   const [penerima, setPenerima] = useState("")
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState<string | undefined>("")
   
   const handleChangeHarga = (e: ChangeEvent<HTMLInputElement>) => setHargaBrg(+e.target.value);
   
@@ -218,7 +218,7 @@ export default function AddBarang() {
                 <UploadDropzone
                   endpoint="productImage"
                   onClientUploadComplete={(res) => {
-                    setImage(res[0].url);
+                    setImage(res?.[0].url);
                     // Do something with the response
                     console.log("Files: ", res);
                     toast.success("Upload Completed");
